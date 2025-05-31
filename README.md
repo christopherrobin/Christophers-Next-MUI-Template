@@ -1,6 +1,6 @@
 # Christophers-Next-MUI-Template
 
-![Howdy Preview](public/howdy.png)
+![Howdy Preview](public/welcome.png)
 
 ## A modern, minimal authentication starter for developers, built with Next.js, TypeScript, Prisma, and Material UI.
 
