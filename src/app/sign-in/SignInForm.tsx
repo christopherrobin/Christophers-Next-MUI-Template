@@ -47,7 +47,9 @@ function SignInForm() {
         label="Email"
         type="email"
         value={email}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setEmail(e.target.value)
+        }
         required
         autoComplete="email"
         fullWidth
@@ -57,7 +59,9 @@ function SignInForm() {
         label="Password"
         type="password"
         value={password}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setPassword(e.target.value)
+        }
         required
         autoComplete="current-password"
         fullWidth

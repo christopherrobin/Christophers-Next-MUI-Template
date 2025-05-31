@@ -1,6 +1,5 @@
 'use client'
-import { Box, Typography, TextField, Button } from '@mui/material'
-import Link from 'next/link'
+import { Box, Typography, TextField, Button, Link } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
@@ -116,12 +115,14 @@ export default function Join() {
         </Button>
         {error && <Typography color="error">{error}</Typography>}
       </Box>
-      <Typography variant="body2" color="text.secondary" mt={4}>
-        Already have an account?{' '}
-        <Link href="/sign-in" passHref>
-          Sign In
-        </Link>
-      </Typography>
+      <Box mt={2} textAlign="center">
+        <Typography variant="body2" color="text.secondary">
+          Already have an account?{' '}
+          <Link href="/join" color="primary" underline="hover">
+            Sign In
+          </Link>
+        </Typography>
+      </Box>
     </Box>
   )
 }
