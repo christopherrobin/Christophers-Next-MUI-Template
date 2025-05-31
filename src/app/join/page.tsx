@@ -71,7 +71,7 @@ export default function Join() {
       p={4}
     >
       <Typography variant="h3" color="primary" fontWeight={700} mb={4}>
-        Join the Club
+        Join
       </Typography>
       <Box
         component="form"
@@ -86,21 +86,24 @@ export default function Join() {
           label="Email"
           type="email"
           value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(e.target.value)
+          }
           required
           autoComplete="email"
           fullWidth
-          variant="outlined"
+          autoFocus
         />
         <TextField
           label="Password"
           type="password"
           value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(e.target.value)
+          }
           required
           autoComplete="current-password"
           fullWidth
-          variant="outlined"
         />
         <Button
           type="submit"
@@ -115,19 +118,8 @@ export default function Join() {
       </Box>
       <Typography variant="body2" color="text.secondary" mt={4}>
         Already have an account?{' '}
-        <Link href="/sign-in" passHref legacyBehavior>
-          <Typography
-            component="a"
-            color="primary"
-            sx={{
-              textDecoration: 'underline',
-              cursor: 'pointer',
-              fontWeight: 500,
-              display: 'inline'
-            }}
-          >
-            Sign In
-          </Typography>
+        <Link href="/sign-in" passHref>
+          Sign In
         </Link>
       </Typography>
     </Box>
