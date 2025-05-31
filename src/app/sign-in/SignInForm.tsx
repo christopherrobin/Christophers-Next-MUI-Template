@@ -1,7 +1,6 @@
+import { Box, Typography, Link, TextField, Button } from '@mui/material'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
-
-import { Box, Typography, Link, TextField, Button } from '@mui/material'
 
 function SignInForm() {
   const [email, setEmail] = useState('')
@@ -35,7 +34,15 @@ function SignInForm() {
   }
 
   return (
-    <Box component="form" display="flex" flexDirection="column" gap={2} width="100%" maxWidth={400} onSubmit={handleSubmit}>
+    <Box
+      component="form"
+      display="flex"
+      flexDirection="column"
+      gap={2}
+      width="100%"
+      maxWidth={400}
+      onSubmit={handleSubmit}
+    >
       <TextField
         label="Email"
         type="email"
@@ -58,7 +65,13 @@ function SignInForm() {
         margin="normal"
         variant="outlined"
       />
-      <Button type="submit" variant="contained" color="primary" disabled={loading} sx={{ mt: 2 }}>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={loading}
+        sx={{ mt: 2 }}
+      >
         {loading ? 'Signing In...' : 'Sign In'}
       </Button>
       {error && <Typography color="error">{error}</Typography>}

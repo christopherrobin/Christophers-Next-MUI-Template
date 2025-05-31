@@ -1,8 +1,8 @@
 'use client'
+import { Box, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import React, { useEffect } from 'react'
-import { Box, Typography } from '@mui/material'
 
 import SignInForm from './SignInForm'
 
@@ -17,7 +17,14 @@ export default function SignIn() {
   }, [status, router])
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh" p={4}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="100vh"
+      p={4}
+    >
       <Typography variant="h3" color="primary" fontWeight={700} mb={4}>
         Sign In
       </Typography>

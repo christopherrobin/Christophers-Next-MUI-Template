@@ -1,28 +1,28 @@
 // src/components/Providers.tsx
 'use client'
-import { SessionProvider } from 'next-auth/react';
-import { ReactNode } from 'react';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { ThemeProvider, CssBaseline } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
+import { SessionProvider } from 'next-auth/react'
+import { ReactNode } from 'react'
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#1976d2',
+      main: '#1976d2'
     },
     secondary: {
-      main: '#9c27b0',
+      main: '#9c27b0'
     },
     background: {
       default: '#121212',
-      paper: '#1e1e1e',
-    },
+      paper: '#1e1e1e'
+    }
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-  },
-});
+    fontFamily: 'Roboto, Arial, sans-serif'
+  }
+})
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -32,5 +32,5 @@ export function Providers({ children }: { children: ReactNode }) {
         {children}
       </ThemeProvider>
     </SessionProvider>
-  );
+  )
 }

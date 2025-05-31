@@ -1,9 +1,9 @@
 'use client'
+import { Box, Typography, TextField, Button } from '@mui/material'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Box, Typography, TextField, Button } from '@mui/material'
 
 export default function Join() {
   const { status } = useSession()
@@ -62,11 +62,26 @@ export default function Join() {
   }
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh" p={4}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="100vh"
+      p={4}
+    >
       <Typography variant="h3" color="primary" fontWeight={700} mb={4}>
         Join the Club
       </Typography>
-      <Box component="form" display="flex" flexDirection="column" gap={2} width="100%" maxWidth={400} onSubmit={handleSubmit}>
+      <Box
+        component="form"
+        display="flex"
+        flexDirection="column"
+        gap={2}
+        width="100%"
+        maxWidth={400}
+        onSubmit={handleSubmit}
+      >
         <TextField
           label="Email"
           type="email"
@@ -89,7 +104,13 @@ export default function Join() {
           margin="normal"
           variant="outlined"
         />
-        <Button type="submit" variant="contained" color="primary" disabled={loading} sx={{ mt: 2 }}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={loading}
+          sx={{ mt: 2 }}
+        >
           {loading ? 'Joining...' : 'Join'}
         </Button>
         {error && <Typography color="error">{error}</Typography>}
@@ -97,7 +118,16 @@ export default function Join() {
       <Typography variant="body2" color="text.secondary" mt={4}>
         Already have an account?{' '}
         <Link href="/sign-in" passHref legacyBehavior>
-          <Typography component="a" color="primary" sx={{ textDecoration: 'underline', cursor: 'pointer', fontWeight: 500, display: 'inline' }}>
+          <Typography
+            component="a"
+            color="primary"
+            sx={{
+              textDecoration: 'underline',
+              cursor: 'pointer',
+              fontWeight: 500,
+              display: 'inline'
+            }}
+          >
             Sign In
           </Typography>
         </Link>

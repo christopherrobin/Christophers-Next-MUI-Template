@@ -15,9 +15,13 @@ export async function middleware(request: NextRequest) {
     })
     if (!token) {
       // Redirect to sign-in page, preserve intended destination
-      const signInUrl = new URL('/sign-in', request.url)
-      signInUrl.searchParams.set('callbackUrl', request.url)
-      return NextResponse.redirect(signInUrl)
+      if (request.url && request.url.startsWith('http')) {
+        const signInUrl = new URL('/sign-in', request.url)
+        signInUrl.searchParams.set('callbackUrl', request.url)
+        return NextResponse.redirect(signInUrl)
+      }
+      // If request.url is not valid, allow the request (prevents build/prerender errors)
+      return NextResponse.next()
     }
   }
   // Allow all other routes
