@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
     // getToken returns null if not authenticated
     const token = await getToken({
       req: request,
-      secret: process.env.NEXTAUTH_SECRET
+      secret: process.env.NEXTAUTH_SECRET || ''
     })
     if (!token) {
       // Redirect to sign-in page, preserve intended destination
