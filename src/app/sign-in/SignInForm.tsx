@@ -47,22 +47,20 @@ function SignInForm() {
         label="Email"
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         required
         autoComplete="email"
         fullWidth
-        margin="normal"
         variant="outlined"
       />
       <TextField
         label="Password"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
         required
         autoComplete="current-password"
         fullWidth
-        margin="normal"
         variant="outlined"
       />
       <Button
