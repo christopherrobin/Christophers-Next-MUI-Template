@@ -1,12 +1,9 @@
 'use client'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
-import { Box, Typography, Link as MuiLink } from '@mui/material'
-
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
+import Link from 'next/link'
+import { Box, Typography, TextField, Button } from '@mui/material'
 
 export default function Join() {
   const { status } = useSession()
@@ -70,32 +67,40 @@ export default function Join() {
         Join the Club
       </Typography>
       <Box component="form" display="flex" flexDirection="column" gap={2} width="100%" maxWidth={400} onSubmit={handleSubmit}>
-        <Input
+        <TextField
+          label="Email"
           type="email"
-          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           autoComplete="email"
+          fullWidth
+          margin="normal"
+          variant="outlined"
         />
-        <Input
+        <TextField
+          label="Password"
           type="password"
-          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           autoComplete="current-password"
+          fullWidth
+          margin="normal"
+          variant="outlined"
         />
-        <Button type="submit" loading={loading}>
+        <Button type="submit" variant="contained" color="primary" disabled={loading} sx={{ mt: 2 }}>
           {loading ? 'Joining...' : 'Join'}
         </Button>
         {error && <Typography color="error">{error}</Typography>}
       </Box>
       <Typography variant="body2" color="text.secondary" mt={4}>
         Already have an account?{' '}
-        <MuiLink href="/sign-in" color="primary" underline="hover">
-          Sign In
-        </MuiLink>
+        <Link href="/sign-in" passHref legacyBehavior>
+          <Typography component="a" color="primary" sx={{ textDecoration: 'underline', cursor: 'pointer', fontWeight: 500, display: 'inline' }}>
+            Sign In
+          </Typography>
+        </Link>
       </Typography>
     </Box>
   )

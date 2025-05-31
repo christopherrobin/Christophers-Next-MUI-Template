@@ -2,7 +2,7 @@
 import { signOut, useSession } from 'next-auth/react'
 import { Box, Typography } from '@mui/material'
 
-import { Button } from '@/components/Button'
+import { Button } from '@mui/material'
 import Spinner from '@/components/Spinner'
 
 export default function Dashboard() {
@@ -25,8 +25,10 @@ export default function Dashboard() {
           Welcome, {email}
         </Typography>
         <Box display="flex" flexDirection="column" gap={2} width="100%">
-          <Box component="pre" sx={{ fontSize: '0.9rem', color: '#e0e0e0', whiteSpace: 'pre-wrap', overflowX: 'auto', background: '#1e1e1e', p: 2, borderRadius: 2, width: '100%' }}>
-            <code>{JSON.stringify(session, null, 2)}</code>
+          <Box display="flex" flexDirection="column" gap={2} width="100%">
+            <Box component="pre" sx={{ fontSize: '0.9rem', color: 'grey.300', whiteSpace: 'pre-wrap', overflowX: 'auto', bgcolor: 'grey.900', p: 2, borderRadius: 2, width: '100%' }}>
+              {JSON.stringify(session, null, 2)}
+            </Box>
           </Box>
           <Button onClick={() => signOut()}>Sign out</Button>
         </Box>
