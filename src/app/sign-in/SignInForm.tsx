@@ -1,9 +1,7 @@
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
 
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
-import { Box, Typography, Link } from '@mui/material'
+import { Box, Typography, Link, TextField, Button } from '@mui/material'
 
 function SignInForm() {
   const [email, setEmail] = useState('')
@@ -38,24 +36,30 @@ function SignInForm() {
 
   return (
     <Box component="form" display="flex" flexDirection="column" gap={2} width="100%" maxWidth={400} onSubmit={handleSubmit}>
-      <Input
+      <TextField
+        label="Email"
         type="email"
-        placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
         autoComplete="email"
+        fullWidth
+        margin="normal"
+        variant="outlined"
       />
-      <Input
+      <TextField
+        label="Password"
         type="password"
-        placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
         autoComplete="current-password"
+        fullWidth
+        margin="normal"
+        variant="outlined"
       />
-      <Button type="submit" loading={loading}>
-        Sign In
+      <Button type="submit" variant="contained" color="primary" disabled={loading} sx={{ mt: 2 }}>
+        {loading ? 'Signing In...' : 'Sign In'}
       </Button>
       {error && <Typography color="error">{error}</Typography>}
       <Box mt={2} textAlign="center">

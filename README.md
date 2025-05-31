@@ -1,19 +1,18 @@
-# Christophers-Next-Template
+# Christophers-Next-MUI-Template
 
 ![Howdy Preview](public/howdy.png)
 
-## A modern, minimal authentication starter for developers, built with Next.js, TypeScript, Prisma, and Tailwind CSS.
+## A modern, minimal authentication starter for developers, built with Next.js, TypeScript, Prisma, and Material UI.
 
-**Howdy!** This starter kit is designed for those who want a clean, extensible foundation for building modern, full-stack web applications with authentication using Next.js 15, TypeScript, Prisma, and Tailwind CSS.
+**Howdy!** This starter kit is designed for those who want a clean, extensible foundation for building modern, full-stack web applications with authentication using Next.js 15, TypeScript, Prisma, and Material UI.
 
 ## Stack
 
 - **Next.js 15** with App Router
 - **TypeScript** for type safety
 - **Prisma** ORM with PostgreSQL
-- **Tailwind CSS** for styling
+- **Material UI** for styling
 - **NextAuth.js** for authentication (email & password)
-- **Heroicons** for modern SVG icons
 - **bcrypt** (via bcryptjs) for secure password hashing
 
 ## Tooling & Features
@@ -37,8 +36,8 @@ Clone and set up the project in minutes:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/christopherrobin/Christophers-Next-Template
-   cd Christophers-Next-Template
+   git clone https://github.com/christopherrobin/Christophers-Next-MUI-Template
+   cd Christophers-Next-MUI-Template
    ```
 2. Install dependencies:
    ```bash
@@ -74,7 +73,7 @@ Extend or modify any part to fit your project:
 - Add new pages or API routes in `src/app/`
 - Create custom UI components in `src/components/`
 - Adjust authentication logic in `src/lib/auth.ts`
-- Update styles via Tailwind config or CSS
+- Update styles via MUI config or CSS
 
 ## Scripts
 
@@ -91,19 +90,6 @@ Extend or modify any part to fit your project:
 
 - `DATABASE_PUBLIC_URL` — PostgreSQL connection string
 - `NEXTAUTH_SECRET` — Secret for NextAuth.js
-
-## Using Heroicons
-
-This project uses [Heroicons](https://heroicons.com/) for modern SVG icons in React components.
-
-### How to Use Heroicons
-
-- The `@heroicons/react` package is installed as a dependency.
-- Import icons into your components. There are two main styles and sizes.
-- Use icons as React components, e.g. `<RocketLaunchIcon className="w-5 h-5" />`.
-- The custom `Button` component supports passing icons as `startIcon` or `endIcon` props.
-
-For more icons and usage details, see the [Heroicons documentation](https://heroicons.com/).
 
 ## Testing
 

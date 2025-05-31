@@ -1,7 +1,7 @@
 {
-  "name": "christophers-next-template",
+  "name": "christophers-next-mui-template",
   "version": "1.0.0",
-  "description": "A Next.js template with TypeScript, Tailwind CSS, Prisma, and NextAuth.js.",
+  "description": "A Next.js template with TypeScript, MUI, Prisma, and NextAuth.js.",
   "author": "Christopher Reynolds",
   "license": "MIT",
   "private": false,
@@ -66,7 +66,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/christopherrobin/Christophers-Next-Template.git"
+    "url": "https://github.com/christopherrobin/Christophers-Next-MUI-Template.git"
   },
   "engines": {
     "node": ">=18.17.0"

@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Christophers-Next-Template',
+  title: 'Christophers-Next-MUI-Template',
   description:
-    'Christophers-Next-Template is a Next.js template for building modern web applications.'
+    'Christophers-Next-MUI-Template is a Next.js template for building modern web applications.'
 }
 
 export default function RootLayout({
@@ -50,7 +50,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#2f855a" />
         <meta name="description" content="Welcome to the club" />
-        <meta name="keywords" content="Christophers-Next-Template" />
+        <meta name="keywords" content="Christophers-Next-MUI-Template" />
         <meta name="author" content="Christopher" />
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />

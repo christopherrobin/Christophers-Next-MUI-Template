@@ -1,8 +1,8 @@
 'use client'
-import { ArrowRightCircleIcon } from '@heroicons/react/20/solid'
-import { RocketLaunchIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import { Box, Stack, Typography, Button, Link } from '@mui/material'
+import { Box, Typography, Button, Link } from '@mui/material'
+import RocketLaunch from '@mui/icons-material/RocketLaunch'
+import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight'
 
 import { GitHubIcon } from '@/components/GitHubIcon'
 
@@ -43,7 +43,7 @@ export default function Home() {
           component="a"
           href="/join"
           sx={{ alignSelf: 'center', my: 1, width: '100%' }}
-          endIcon={<RocketLaunchIcon style={{ width: 24, height: 24 }} />}
+          endIcon={<RocketLaunch style={{ width: 24, height: 24 }} />}
         >
           Join
         </Button>
@@ -51,7 +51,7 @@ export default function Home() {
           component="a"
           href="/sign-in"
           sx={{ alignSelf: 'center', width: '100%' }}
-          endIcon={<ArrowRightCircleIcon style={{ width: 24, height: 24, color: '#1976d2' }} />}
+          endIcon={<ArrowCircleRight style={{ width: 24, height: 24, color: '#1976d2' }} />}
         >
           Sign In
         </Button>
