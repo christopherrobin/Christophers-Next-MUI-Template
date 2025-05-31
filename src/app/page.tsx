@@ -1,8 +1,7 @@
 'use client'
-import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import RocketLaunch from '@mui/icons-material/RocketLaunch'
-import { Box, Typography, Button, Link } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 import React from 'react'
 
 export default function Home() {
@@ -28,20 +27,21 @@ export default function Home() {
         <Typography variant="h1" color="primary">
           Howdy.
         </Typography>
-        <Typography component="h2" variant="h3" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           Christophers-Next-MUI-Template
         </Typography>
-        <Box display="flex" alignItems="center" gap={1} mb={1}>
-          <GitHubIcon
-            style={{ width: '2rem', height: '2rem', color: 'white' }}
-          />
-          <Link
+        <Box>
+          <Button
+            variant="outlined"
+            component="a"
             href="https://github.com/christopherrobin/Christophers-Next-MUI-Template"
             target="_blank"
             rel="noopener noreferrer"
+            startIcon={<GitHubIcon style={{ width: 24, height: 24 }} />}
+            sx={{ mb: 2, width: '100%' }}
           >
-            @christopherrobin
-          </Link>
+            View on GitHub
+          </Button>
         </Box>
         <Typography variant="body1" gutterBottom>
           This is a template for Next.js applications with TypeScript, Material
@@ -59,15 +59,10 @@ export default function Home() {
           Join
         </Button>
         <Button
-          variant="outlined"
+          variant="text"
           component="a"
           href="/sign-in"
-          sx={{ alignSelf: 'center', width: '100%' }}
-          endIcon={
-            <ArrowCircleRight
-              style={{ width: 24, height: 24, color: '#1976d2' }}
-            />
-          }
+          sx={{ alignSelf: 'center', width: '100%', maxWidth: 150 }}
         >
           Sign In
         </Button>

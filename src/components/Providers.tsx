@@ -21,6 +21,33 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Roboto, Arial, sans-serif'
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: '8px',
+          padding: '8px 16px'
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h1: {
+          fontSize: '2.5rem',
+          fontWeight: 700
+        },
+        h2: {
+          fontSize: '2rem',
+          fontWeight: 600
+        },
+        body1: {
+          fontSize: '1rem',
+          lineHeight: 1.5
+        }
+      }
+    }
   }
 })
 
