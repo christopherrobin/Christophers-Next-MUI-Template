@@ -36,6 +36,7 @@ const themeOptions: ThemeOptions = {
     }
   } as PaletteOptions,
   typography: {
+    fontFamily: 'var(--font-geist-sans)',
     h1: {
       fontWeight: 900,
       fontSize: '3rem'

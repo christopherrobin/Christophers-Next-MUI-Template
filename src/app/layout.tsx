@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-// import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Providers } from '@/components/Providers'
 import './globals.css'
 
-/*
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin']
@@ -14,7 +13,7 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin']
 })
-*/
+
 export const metadata: Metadata = {
   title: 'Christophers-Next-MUI-Template',
   description:
@@ -58,7 +57,9 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2f855a" />
         <meta name="msapplication-TileImage" content="/apple-touch-icon.png" />
       </head>
-      <body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
