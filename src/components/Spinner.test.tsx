@@ -1,12 +1,17 @@
-import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
-import React from 'react'
+import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
 
 import Spinner from './Spinner'
 
 describe('Spinner', () => {
   it('renders a progressbar', () => {
-    render(<Spinner />)
+    renderWithProviders(<Spinner />)
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
+  })
+
+  it('uses the primary theme color', () => {
+    renderWithProviders(<Spinner />)
+    expect(screen.getByRole('progressbar')).toHaveClass(
+      'MuiCircularProgress-colorPrimary'
+    )
   })
 })

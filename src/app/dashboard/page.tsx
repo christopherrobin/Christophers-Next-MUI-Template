@@ -22,6 +22,8 @@ export default function Dashboard() {
     )
   }
 
+  if (!session) return null
+
   return (
     <Box px={4} py={6}>
       <Box component="main" display="flex" flexDirection="column" gap={2}>
@@ -41,6 +43,7 @@ export default function Dashboard() {
           <Box display="flex" flexDirection="column" gap={2} width="100%">
             <Box
               component="pre"
+              data-testid="session-json"
               sx={{
                 fontSize: '0.9rem',
                 color: 'grey.300',

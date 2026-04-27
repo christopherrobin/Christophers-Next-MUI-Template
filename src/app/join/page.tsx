@@ -113,12 +113,16 @@ export default function Join() {
         >
           {loading ? 'Joining...' : 'Join'}
         </Button>
-        {error && <Typography color="error">{error}</Typography>}
+        {error && (
+          <Typography color="error" data-testid="join-error">
+            {error}
+          </Typography>
+        )}
       </Box>
       <Box mt={2} textAlign="center">
         <Typography variant="body2" color="text.secondary">
           Already have an account?{' '}
-          <Link href="/join" color="primary" underline="hover">
+          <Link href="/sign-in" color="primary" underline="hover">
             Sign In
           </Link>
         </Typography>

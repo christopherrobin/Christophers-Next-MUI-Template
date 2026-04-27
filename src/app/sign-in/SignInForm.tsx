@@ -1,8 +1,19 @@
+'use client'
 import { Box, Typography, Link, TextField, Button } from '@mui/material'
+import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
 
+function isSafeRelativePath(value: string | null): value is string {
+  if (!value) return false
+  if (!value.startsWith('/')) return false
+  if (value.startsWith('//')) return false
+  if (value.startsWith('/\\')) return false
+  return true
+}
+
 function SignInForm() {
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -13,17 +24,20 @@ function SignInForm() {
     setLoading(true)
     setError('')
 
+    const requested = searchParams.get('callbackUrl')
+    const callbackUrl = isSafeRelativePath(requested) ? requested : '/dashboard'
+
     try {
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
-        callbackUrl: '/dashboard'
+        callbackUrl
       })
       if (result?.error) {
         setError(result.error)
       } else if (result?.url) {
-        window.location.href = result.url
+        window.location.href = callbackUrl
       }
     } catch (err) {
       console.error('Sign in error:', err)
@@ -76,7 +90,11 @@ function SignInForm() {
       >
         {loading ? 'Signing In...' : 'Sign In'}
       </Button>
-      {error && <Typography color="error">{error}</Typography>}
+      {error && (
+        <Typography color="error" data-testid="sign-in-error">
+          {error}
+        </Typography>
+      )}
       <Box mt={2} textAlign="center">
         <Typography variant="body2" color="text.secondary">
           Don&apos;t have an account?{' '}
