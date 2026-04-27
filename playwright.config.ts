@@ -11,7 +11,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // Serialize workers: avoids auth-fixture race against the single dev server.
+  // Emotion SSR cold start widens the collision window beyond what the Tailwind
+  // sibling exhibits. Tailwind variant uses default (`process.env.CI ? 1 : undefined`).
+  workers: 1,
   reporter: [['html', { open: 'never' }], ['list']],
   globalSetup: require.resolve('./e2e/global-setup'),
   use: {

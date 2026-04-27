@@ -4,6 +4,8 @@ import React from 'react'
 const Spinner: React.FC = () => {
   return (
     <Box
+      role="status"
+      aria-label="Loading"
       display="flex"
       justifyContent="center"
       alignItems="center"

@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom'
 
 if (typeof window !== 'undefined') {
+  // matchMedia mock — MUI-specific (used by useMediaQuery and CircularProgress
+  // responsive logic). Tailwind sibling repo does not need this.
   if (!window.matchMedia) {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
