@@ -1,13 +1,13 @@
 import { signOut, useSession } from 'next-auth/react'
 
+import Dashboard from './page'
+
 import { makeSession } from '@/test-utils/factories'
 import {
   renderWithProviders,
   screen,
   setupUser
 } from '@/test-utils/renderWithProviders'
-
-import Dashboard from './page'
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),

@@ -4,10 +4,10 @@
 import { hash } from 'bcryptjs'
 import { NextRequest } from 'next/server'
 
+import { POST } from './route'
+
 import { prisma } from '@/lib/prisma'
 import { makeUser } from '@/test-utils/factories'
-
-import { POST } from './route'
 
 jest.mock('@/lib/prisma', () => ({
   prisma: { user: { findUnique: jest.fn(), create: jest.fn() } }

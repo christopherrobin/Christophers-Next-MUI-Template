@@ -1,6 +1,6 @@
-import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
-
 import Spinner from './Spinner'
+
+import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
 
 describe('Spinner', () => {
   it('renders a progressbar', () => {

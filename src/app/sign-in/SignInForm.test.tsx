@@ -1,13 +1,13 @@
 import { signIn } from 'next-auth/react'
 
+import SignInForm from './SignInForm'
+
 import {
   renderWithProviders,
   screen,
   setupUser,
   waitFor
 } from '@/test-utils/renderWithProviders'
-
-import SignInForm from './SignInForm'
 
 jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),

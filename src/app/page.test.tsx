@@ -1,6 +1,6 @@
-import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
-
 import Home from './page'
+
+import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
 
 describe('Home page', () => {
   beforeEach(() => {

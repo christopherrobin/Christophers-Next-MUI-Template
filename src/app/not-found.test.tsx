@@ -1,6 +1,6 @@
-import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
-
 import NotFound from './not-found'
+
+import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
 
 describe('NotFound page', () => {
   beforeEach(() => {

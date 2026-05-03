@@ -4,10 +4,10 @@
 import { compare } from 'bcryptjs'
 import type { JWT } from 'next-auth/jwt'
 
-import { makeUser } from '@/test-utils/factories'
-
 import { authOptions } from './auth'
 import { prisma } from './prisma'
+
+import { makeUser } from '@/test-utils/factories'
 
 jest.mock('@/lib/prisma', () => ({
   prisma: { user: { findUnique: jest.fn(), create: jest.fn() } }

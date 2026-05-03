@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
-import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
-
 import SignIn from './page'
+
+import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
