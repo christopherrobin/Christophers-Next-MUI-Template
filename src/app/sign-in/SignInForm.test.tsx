@@ -14,17 +14,15 @@ jest.mock('next-auth/react', () => ({
   SessionProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 
+const mockedPush = jest.fn()
+const mockedRefresh = jest.fn()
+
 jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: mockedPush, refresh: mockedRefresh }),
   useSearchParams: () => new URLSearchParams()
 }))
 
 const mockedSignIn = jest.mocked(signIn)
-
-beforeEach(() => {
-  ;(window as unknown as { location: { href: string } }).location = {
-    href: ''
-  }
-})
 
 async function fillAndSubmit(email = 'a@b.com', password = 'pw') {
   const user = setupUser()
@@ -74,8 +72,9 @@ describe('SignInForm', () => {
     await fillAndSubmit()
 
     await waitFor(() => {
-      expect(window.location.href).toBe('/dashboard')
+      expect(mockedPush).toHaveBeenCalledWith('/dashboard')
     })
+    expect(mockedRefresh).toHaveBeenCalled()
   })
 
   it('renders the signIn error message when result.error is set', async () => {
@@ -93,7 +92,7 @@ describe('SignInForm', () => {
     expect(await screen.findByTestId('sign-in-error')).toHaveTextContent(
       /invalid password/i
     )
-    expect(window.location.href).toBe('')
+    expect(mockedPush).not.toHaveBeenCalled()
   })
 
   it('renders a fallback error when signIn rejects', async () => {

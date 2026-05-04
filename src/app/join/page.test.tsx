@@ -45,12 +45,12 @@ function setSessionStatus(
   } as never)
 }
 
+let currentRouter = makeRouter()
+
 beforeEach(() => {
-  ;(window as unknown as { location: { href: string } }).location = {
-    href: ''
-  }
+  currentRouter = makeRouter()
   setSessionStatus('unauthenticated')
-  mockedUseRouter.mockReturnValue(makeRouter() as never)
+  mockedUseRouter.mockReturnValue(currentRouter as never)
 })
 
 async function fillAndSubmit(email = 'a@b.com', password = 'pw') {
@@ -112,8 +112,9 @@ describe('Join page', () => {
     })
 
     await waitFor(() => {
-      expect(window.location.href).toBe('/dashboard')
+      expect(currentRouter.push).toHaveBeenCalledWith('/dashboard')
     })
+    expect(currentRouter.refresh).toHaveBeenCalled()
   })
 
   it('shows the API error message when /api/join responds non-ok', async () => {
