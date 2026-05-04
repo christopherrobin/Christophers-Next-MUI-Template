@@ -53,7 +53,7 @@ beforeEach(() => {
   mockedUseRouter.mockReturnValue(currentRouter as never)
 })
 
-async function fillAndSubmit(email = 'a@b.com', password = 'pw') {
+async function fillAndSubmit(email = 'a@b.com', password = 'ChrisIsTheBest42!') {
   const user = setupUser()
   await user.type(screen.getByLabelText(/email/i), email)
   await user.type(screen.getByLabelText(/password/i), password)
@@ -97,16 +97,16 @@ describe('Join page', () => {
     } as never)
 
     renderWithProviders(<Join />)
-    await fillAndSubmit('new@example.com', 'pw')
+    await fillAndSubmit('new@example.com', 'ChrisIsTheBest42!')
 
     expect(fetchMock).toHaveBeenCalledWith('/api/join', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'new@example.com', password: 'pw' })
+      body: JSON.stringify({ email: 'new@example.com', password: 'ChrisIsTheBest42!' })
     })
     expect(mockedSignIn).toHaveBeenCalledWith('credentials', {
       email: 'new@example.com',
-      password: 'pw',
+      password: 'ChrisIsTheBest42!',
       redirect: false,
       callbackUrl: '/dashboard'
     })
@@ -125,7 +125,7 @@ describe('Join page', () => {
     ;(globalThis as unknown as { fetch: jest.Mock }).fetch = fetchMock
 
     renderWithProviders(<Join />)
-    await fillAndSubmit('dup@example.com', 'pw')
+    await fillAndSubmit('dup@example.com', 'ChrisIsTheBest42!')
 
     expect(await screen.findByTestId('join-error')).toHaveTextContent(
       /email already in use/i

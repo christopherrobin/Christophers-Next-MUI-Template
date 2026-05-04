@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 import { seedUser } from './helpers/db'
 
 const TEST_EMAIL = 'signin@test.dev'
-const TEST_PASSWORD = 'CorrectHorse42!'
+const TEST_PASSWORD = 'ChrisIsTheBest42!'
 
 test.describe('sign-in flow', () => {
   test.beforeAll(async () => {
@@ -45,7 +45,7 @@ test.describe('sign-in flow', () => {
     await expect(page).toHaveURL(/\/sign-in$/)
   })
 
-  test('empty fields blocked by HTML5 required (no network call)', async ({
+  test('empty fields show zod errors and skip network call', async ({
     page
   }) => {
     await page.goto('/sign-in')
@@ -57,11 +57,12 @@ test.describe('sign-in flow', () => {
     })
     await page.getByRole('button', { name: /sign in/i }).click()
     await expect(page).toHaveURL(/\/sign-in$/)
-    const emailInput = page.getByLabel(/email/i)
-    const isInvalid = await emailInput.evaluate(
-      (el: HTMLInputElement) => !el.validity.valid
+    await expect(page.getByTestId('sign-in-email-error')).toContainText(
+      /email is required/i
     )
-    expect(isInvalid).toBe(true)
+    await expect(page.getByTestId('sign-in-password-error')).toContainText(
+      /password is required/i
+    )
     expect(calledNextAuth).toBe(false)
   })
 

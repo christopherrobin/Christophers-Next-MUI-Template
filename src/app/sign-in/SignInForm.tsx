@@ -1,8 +1,12 @@
 'use client'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Typography, Link, TextField, Button } from '@mui/material'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+
+import { signInSchema, type SignInInput } from '@/lib/schemas'
 
 function isSafeRelativePath(value: string | null): value is string {
   if (!value) return false
@@ -15,15 +19,18 @@ function isSafeRelativePath(value: string | null): value is string {
 function SignInForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [serverError, setServerError] = useState('')
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting }
+  } = useForm<SignInInput>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: { email: '', password: '' }
+  })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+  const onSubmit = async ({ email, password }: SignInInput) => {
+    setServerError('')
 
     const requested = searchParams.get('callbackUrl')
     const callbackUrl = isSafeRelativePath(requested) ? requested : '/dashboard'
@@ -36,16 +43,14 @@ function SignInForm() {
         callbackUrl
       })
       if (result?.error) {
-        setError(result.error)
+        setServerError(result.error)
       } else if (result?.url) {
         router.push(callbackUrl)
         router.refresh()
       }
     } catch (err) {
       console.error('Sign in error:', err)
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
+      setServerError('An unexpected error occurred')
     }
   }
 
@@ -57,44 +62,63 @@ function SignInForm() {
       gap={2}
       width="100%"
       maxWidth={400}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
     >
-      <TextField
-        label="Email"
-        type="email"
-        value={email}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setEmail(e.target.value)
-        }
-        required
-        autoComplete="email"
-        fullWidth
-        variant="outlined"
+      <Controller
+        name="email"
+        control={control}
+        render={({ field, fieldState }) => (
+          <TextField
+            {...field}
+            label="Email"
+            type="email"
+            autoComplete="email"
+            fullWidth
+            variant="outlined"
+            error={!!fieldState.error}
+            helperText={fieldState.error?.message}
+            FormHelperTextProps={
+              {
+                'data-testid': 'sign-in-email-error'
+              } as React.HTMLAttributes<HTMLDivElement>
+            }
+          />
+        )}
       />
-      <TextField
-        label="Password"
-        type="password"
-        value={password}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setPassword(e.target.value)
-        }
-        required
-        autoComplete="current-password"
-        fullWidth
-        variant="outlined"
+      <Controller
+        name="password"
+        control={control}
+        render={({ field, fieldState }) => (
+          <TextField
+            {...field}
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            fullWidth
+            variant="outlined"
+            error={!!fieldState.error}
+            helperText={fieldState.error?.message}
+            FormHelperTextProps={
+              {
+                'data-testid': 'sign-in-password-error'
+              } as React.HTMLAttributes<HTMLDivElement>
+            }
+          />
+        )}
       />
       <Button
         type="submit"
         variant="contained"
         color="primary"
-        disabled={loading}
+        disabled={isSubmitting}
         sx={{ mt: 2 }}
       >
-        {loading ? 'Signing In...' : 'Sign In'}
+        {isSubmitting ? 'Signing In...' : 'Sign In'}
       </Button>
-      {error && (
+      {serverError && (
         <Typography color="error" data-testid="sign-in-error">
-          {error}
+          {serverError}
         </Typography>
       )}
       <Box mt={2} textAlign="center">

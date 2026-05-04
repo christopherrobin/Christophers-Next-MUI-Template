@@ -1,31 +1,36 @@
 'use client'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Typography, TextField, Button, Link } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+
+import { joinSchema, type JoinInput } from '@/lib/schemas'
 
 export default function Join() {
   const { status } = useSession()
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [serverError, setServerError] = useState('')
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting }
+  } = useForm<JoinInput>({
+    resolver: zodResolver(joinSchema),
+    defaultValues: { email: '', password: '' }
+  })
 
-  // Redirect to dashboard if already authenticated
   useEffect(() => {
     if (status === 'authenticated') {
       router.replace('/dashboard')
     }
   }, [status, router])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+  const onSubmit = async ({ email, password }: JoinInput) => {
+    setServerError('')
 
     try {
-      // First create the account
       const res = await fetch('/api/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -35,7 +40,6 @@ export default function Join() {
       const data = await res.json()
 
       if (res.ok) {
-        // Account created successfully, now sign in directly
         const signInResult = await signIn('credentials', {
           email,
           password,
@@ -44,19 +48,17 @@ export default function Join() {
         })
 
         if (signInResult?.error) {
-          setError(signInResult.error)
+          setServerError(signInResult.error)
         } else if (signInResult?.url) {
           router.push('/dashboard')
           router.refresh()
         }
       } else {
-        setError(data.error || 'Failed to create account')
+        setServerError(data.error || 'Failed to create account')
       }
     } catch (err) {
       console.error('Join error:', err)
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
+      setServerError('An unexpected error occurred')
     }
   }
 
@@ -79,43 +81,62 @@ export default function Join() {
         gap={2}
         width="100%"
         maxWidth={400}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
       >
-        <TextField
-          label="Email"
-          type="email"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.target.value)
-          }
-          required
-          autoComplete="email"
-          fullWidth
-          autoFocus
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label="Email"
+              type="email"
+              autoComplete="email"
+              fullWidth
+              autoFocus
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              FormHelperTextProps={
+                {
+                  'data-testid': 'join-email-error'
+                } as React.HTMLAttributes<HTMLDivElement>
+              }
+            />
+          )}
         />
-        <TextField
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-          required
-          autoComplete="current-password"
-          fullWidth
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              label="Password"
+              type="password"
+              autoComplete="new-password"
+              fullWidth
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+              FormHelperTextProps={
+                {
+                  'data-testid': 'join-password-error'
+                } as React.HTMLAttributes<HTMLDivElement>
+              }
+            />
+          )}
         />
         <Button
           type="submit"
           variant="contained"
           color="primary"
-          disabled={loading}
+          disabled={isSubmitting}
           sx={{ mt: 2 }}
         >
-          {loading ? 'Joining...' : 'Join'}
+          {isSubmitting ? 'Joining...' : 'Join'}
         </Button>
-        {error && (
+        {serverError && (
           <Typography color="error" data-testid="join-error">
-            {error}
+            {serverError}
           </Typography>
         )}
       </Box>
