@@ -2,6 +2,14 @@
 
 [![CI](https://github.com/christopherrobin/Christophers-Next-MUI-Template/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/christopherrobin/Christophers-Next-MUI-Template/actions/workflows/ci.yml)
 
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Material UI](https://img.shields.io/badge/Material_UI-9-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4-000000?style=for-the-badge&logo=auth0&logoColor=white)](https://next-auth.js.org/)
+
 ![Howdy Preview](public/welcome.png)
 
 ## A modern, minimal authentication starter for developers, built with Next.js, TypeScript, Prisma, and Material UI.
