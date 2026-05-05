@@ -164,8 +164,8 @@ export default function Home() {
               }}
             >
               An opinionated Next.js 16 starter with Material UI 9, NextAuth,
-              Prisma, Zod, Jest, and Playwright already wired up. Fork it,
-              rename it, ship a product this weekend.
+              Prisma + Postgres, and a full test pyramid. Fork it, set three env
+              vars, and ship.
             </Typography>
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
@@ -230,8 +230,8 @@ export default function Home() {
               mb: 4
             }}
           >
-            Every dependency on its current major. Audited weekly,
-            security-pinned, type-safe end to end.
+            Every dependency on its current major. Type-safe end to end,
+            security-pinned, audited at every PR.
           </Typography>
 
           {/* Big branded badge wall */}
