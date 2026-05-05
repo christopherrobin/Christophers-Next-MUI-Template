@@ -31,13 +31,15 @@ const nextConfig: NextConfig = {
         },
         {
           // Baseline CSP for a Next 16 + MUI 9 (Emotion) + NextAuth starter.
-          // Report-Only: forkers can promote to Content-Security-Policy
-          // (enforcing) once they've audited their own dependencies.
+          // Enforcing as of Phase 14.2 after a soak in Report-Only with
+          // zero violations. Forkers adding third-party scripts (analytics,
+          // embeds, etc.) may need to extend script-src or adopt a
+          // nonce-based approach.
           // 'unsafe-inline' on style-src is required for Emotion/MUI runtime
           // style injection (also matches the Tailwind 4 sibling baseline).
           // 'unsafe-eval' on script-src covers Next 16 dev / React 19
           // hydration. frame-ancestors 'none' complements X-Frame-Options.
-          key: 'Content-Security-Policy-Report-Only',
+          key: 'Content-Security-Policy',
           value: [
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
