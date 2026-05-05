@@ -23,13 +23,18 @@ describe('Home page', () => {
     expect(signIn).toHaveAttribute('href', '/sign-in')
   })
 
-  it('renders the GitHub link with target=_blank and rel=noopener', () => {
-    const github = screen.getByRole('link', { name: /view on github/i })
-    expect(github).toHaveAttribute('target', '_blank')
-    expect(github.getAttribute('rel') ?? '').toMatch(/noopener/)
-    expect(github).toHaveAttribute(
-      'href',
-      'https://github.com/christopherrobin/Christophers-Next-MUI-Template'
-    )
+  it('renders GitHub links with target=_blank and rel=noopener', () => {
+    const githubLinks = screen.getAllByRole('link', {
+      name: /view on github/i
+    })
+    expect(githubLinks.length).toBeGreaterThan(0)
+    githubLinks.forEach((link) => {
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link.getAttribute('rel') ?? '').toMatch(/noopener/)
+      expect(link).toHaveAttribute(
+        'href',
+        'https://github.com/christopherrobin/Christophers-Next-MUI-Template'
+      )
+    })
   })
 })
