@@ -479,39 +479,51 @@ export default function Home() {
               alignItems: { xs: 'flex-start', sm: 'center' }
             }}
           >
-            <Typography
-              variant="body2"
-              sx={{ color: (t) => alpha(t.palette.common.white, 0.6) }}
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                alignItems: 'center',
+                color: (t) => alpha(t.palette.common.white, 0.6),
+                fontSize: '0.875rem'
+              }}
             >
-              MIT License · Built by{' '}
-              <MuiLink
-                href="https://github.com/christopherrobin"
-                target="_blank"
-                rel="noopener noreferrer"
-                underline="hover"
-                sx={{ color: 'primary.main', fontWeight: 700 }}
-              >
-                @christopherrobin
-              </MuiLink>
-            </Typography>
-            <Stack direction="row" spacing={3} sx={{ alignItems: 'center' }}>
+              <GitHubIcon fontSize="small" />
               <MuiLink
                 href={REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 underline="hover"
                 sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 0.5,
-                  color: (t) => alpha(t.palette.common.white, 0.7),
+                  color: 'inherit',
                   '&:hover': { color: 'primary.main' }
                 }}
               >
-                <GitHubIcon fontSize="small" />
-                Repository
+                View on GitHub
               </MuiLink>
+              <Box component="span" sx={{ opacity: 0.5 }}>
+                ·
+              </Box>
+              <Box component="span">MIT License</Box>
             </Stack>
+            <Typography
+              variant="body2"
+              sx={{ color: (t) => alpha(t.palette.common.white, 0.6) }}
+            >
+              Built by{' '}
+              <MuiLink
+                href="https://github.com/christopherrobin"
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="hover"
+                sx={{
+                  color: 'inherit',
+                  '&:hover': { color: 'primary.main' }
+                }}
+              >
+                @christopherrobin
+              </MuiLink>
+            </Typography>
           </Stack>
         </Container>
       </Box>
