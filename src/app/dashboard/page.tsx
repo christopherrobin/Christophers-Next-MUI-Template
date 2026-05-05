@@ -1,30 +1,19 @@
-'use client'
 import { Box, Typography } from '@mui/material'
-import { Button } from '@mui/material'
-import { signOut, useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
+import { getServerSession } from 'next-auth/next'
 
-import Spinner from '@/components/Spinner'
+import { SignOutButton } from './SignOutButton'
 
-export default function Dashboard() {
-  const { data: session, status } = useSession()
-  const { email } = session?.user || {}
+import { authOptions } from '@/lib/auth'
 
-  if (status === 'loading') {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '100vh'
-        }}
-      >
-        <Spinner />
-      </Box>
-    )
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect('/sign-in')
   }
 
-  if (!session) return null
+  const { email } = session.user
 
   return (
     <Box
@@ -88,7 +77,7 @@ export default function Dashboard() {
               {JSON.stringify(session, null, 2)}
             </Box>
           </Box>
-          <Button onClick={() => signOut()}>Sign out</Button>
+          <SignOutButton />
         </Box>
       </Box>
     </Box>

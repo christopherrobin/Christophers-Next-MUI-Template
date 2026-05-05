@@ -19,7 +19,7 @@ function makeRequest(url: string) {
 describe('proxy', () => {
   describe('authenticated requests', () => {
     beforeEach(() => {
-      mockedGetToken.mockResolvedValue({ sub: 'user-1' })
+      mockedGetToken.mockResolvedValue({ sub: 'user-1' } as never)
     })
 
     it('redirects authed users away from /sign-in to /dashboard', async () => {

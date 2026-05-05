@@ -51,19 +51,19 @@ describe('authOptions.authorize', () => {
     )
   })
 
-  it('throws No user found when prisma returns null', async () => {
+  it('throws Invalid email or password when prisma returns null', async () => {
     mockedFindUnique.mockResolvedValueOnce(null)
     await expect(
       authorize({ email: 'a@b.com', password: 'pw' })
-    ).rejects.toThrow('No user found')
+    ).rejects.toThrow('Invalid email or password')
   })
 
-  it('throws Invalid password when bcrypt compare fails', async () => {
+  it('throws Invalid email or password when bcrypt compare fails', async () => {
     mockedFindUnique.mockResolvedValueOnce(makeUser())
     mockedCompare.mockResolvedValueOnce(false as never)
     await expect(
       authorize({ email: 'a@b.com', password: 'wrong' })
-    ).rejects.toThrow('Invalid password')
+    ).rejects.toThrow('Invalid email or password')
   })
 
   it('returns a sanitized user when credentials are valid', async () => {

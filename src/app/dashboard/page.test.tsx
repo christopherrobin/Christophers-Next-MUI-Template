@@ -1,73 +1,53 @@
-import { signOut, useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
+import { getServerSession } from 'next-auth/next'
+import React from 'react'
 
 import Dashboard from './page'
 
 import { makeSession } from '@/test-utils/factories'
-import {
-  renderWithProviders,
-  screen,
-  setupUser
-} from '@/test-utils/renderWithProviders'
+import { renderWithProviders, screen } from '@/test-utils/renderWithProviders'
 
-jest.mock('next-auth/react', () => ({
-  useSession: jest.fn(),
-  signOut: jest.fn(),
-  SessionProvider: ({ children }: { children: React.ReactNode }) => children
+jest.mock('next-auth/next', () => ({
+  getServerSession: jest.fn()
 }))
 
-const mockedUseSession = jest.mocked(useSession)
-const mockedSignOut = jest.mocked(signOut)
+jest.mock('next/navigation', () => ({
+  redirect: jest.fn(() => {
+    throw new Error('NEXT_REDIRECT')
+  })
+}))
 
-describe('Dashboard page', () => {
-  it('shows the spinner while the session is loading', () => {
-    mockedUseSession.mockReturnValue({
-      data: null,
-      status: 'loading',
-      update: jest.fn()
-    })
+// SignOutButton is a client island that uses next-auth/react. Stub it to
+// keep this test focused on the server component's rendered output.
+jest.mock('./SignOutButton', () => ({
+  SignOutButton: () => <button type="button">Sign out</button>
+}))
 
-    renderWithProviders(<Dashboard />)
-    expect(screen.getByRole('progressbar')).toBeInTheDocument()
+const mockedGetServerSession = jest.mocked(getServerSession)
+const mockedRedirect = redirect as unknown as jest.Mock
+
+describe('Dashboard page (server component)', () => {
+  it('greets the authenticated user and renders the session JSON', async () => {
+    const session = makeSession({ user: { email: 'a@b.com' } })
+    mockedGetServerSession.mockResolvedValue(session)
+
+    const ui = await Dashboard()
+    renderWithProviders(ui as React.ReactElement)
+
+    expect(
+      screen.getByRole('heading', { name: /dashboard/i })
+    ).toBeInTheDocument()
+    expect(screen.getByText(/welcome,\s*a@b\.com/i)).toBeInTheDocument()
+    expect(screen.getByTestId('session-json')).toHaveTextContent(/a@b\.com/)
+    expect(
+      screen.getByRole('button', { name: /sign out/i })
+    ).toBeInTheDocument()
   })
 
-  it('renders nothing when unauthenticated (defensive guard)', () => {
-    mockedUseSession.mockReturnValue({
-      data: null,
-      status: 'unauthenticated',
-      update: jest.fn()
-    })
+  it('redirects to /sign-in when no session is present', async () => {
+    mockedGetServerSession.mockResolvedValue(null)
 
-    const { container } = renderWithProviders(<Dashboard />)
-    expect(container).toBeEmptyDOMElement()
-  })
-
-  describe('when authenticated', () => {
-    beforeEach(() => {
-      mockedUseSession.mockReturnValue({
-        data: makeSession({ user: { email: 'a@b.com' } }),
-        status: 'authenticated',
-        update: jest.fn()
-      })
-    })
-
-    it('renders the dashboard heading and welcome line', () => {
-      renderWithProviders(<Dashboard />)
-      expect(
-        screen.getByRole('heading', { name: /dashboard/i })
-      ).toBeInTheDocument()
-      expect(screen.getByText(/welcome,\s*a@b\.com/i)).toBeInTheDocument()
-    })
-
-    it('renders the JSON-stringified session payload', () => {
-      renderWithProviders(<Dashboard />)
-      expect(screen.getByTestId('session-json')).toHaveTextContent(/a@b\.com/)
-    })
-
-    it('calls signOut when the Sign out button is clicked', async () => {
-      const user = setupUser()
-      renderWithProviders(<Dashboard />)
-      await user.click(screen.getByRole('button', { name: /sign out/i }))
-      expect(mockedSignOut).toHaveBeenCalledTimes(1)
-    })
+    await expect(Dashboard()).rejects.toThrow('NEXT_REDIRECT')
+    expect(mockedRedirect).toHaveBeenCalledWith('/sign-in')
   })
 })

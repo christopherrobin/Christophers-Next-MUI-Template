@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 import SignUp from './page'
 
@@ -12,7 +12,6 @@ import {
 
 jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),
-  useSession: jest.fn(),
   SessionProvider: ({ children }: { children: React.ReactNode }) => children
 }))
 
@@ -21,7 +20,6 @@ jest.mock('next/navigation', () => ({
 }))
 
 const mockedSignIn = jest.mocked(signIn)
-const mockedUseSession = jest.mocked(useSession)
 const mockedUseRouter = jest.mocked(useRouter)
 
 function makeRouter() {
@@ -35,21 +33,10 @@ function makeRouter() {
   }
 }
 
-function setSessionStatus(
-  status: 'loading' | 'authenticated' | 'unauthenticated'
-) {
-  mockedUseSession.mockReturnValue({
-    data: status === 'authenticated' ? ({} as never) : null,
-    status,
-    update: jest.fn()
-  } as never)
-}
-
 let currentRouter = makeRouter()
 
 beforeEach(() => {
   currentRouter = makeRouter()
-  setSessionStatus('unauthenticated')
   mockedUseRouter.mockReturnValue(currentRouter as never)
 })
 
@@ -77,15 +64,6 @@ describe('SignUp page', () => {
     renderWithProviders(<SignUp />)
     const link = screen.getByRole('link', { name: /sign in/i })
     expect(link).toHaveAttribute('href', '/sign-in')
-  })
-
-  it('redirects to /dashboard when session becomes authenticated', () => {
-    const router = makeRouter()
-    mockedUseRouter.mockReturnValue(router as never)
-    setSessionStatus('authenticated')
-
-    renderWithProviders(<SignUp />)
-    expect(router.replace).toHaveBeenCalledWith('/dashboard')
   })
 
   it('POSTs /api/sign-up then signs in on success', async () => {

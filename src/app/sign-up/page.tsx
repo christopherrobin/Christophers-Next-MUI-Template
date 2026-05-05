@@ -9,14 +9,13 @@ import {
   type FormHelperTextProps
 } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { signIn, useSession } from 'next-auth/react'
-import React, { useEffect, useState } from 'react'
+import { signIn } from 'next-auth/react'
+import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { signUpSchema, type SignUpInput } from '@/lib/schemas'
 
 export default function SignUp() {
-  const { status } = useSession()
   const router = useRouter()
   const [serverError, setServerError] = useState('')
   const {
@@ -27,12 +26,6 @@ export default function SignUp() {
     resolver: zodResolver(signUpSchema),
     defaultValues: { email: '', password: '' }
   })
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.replace('/dashboard')
-    }
-  }, [status, router])
 
   const onSubmit = async ({ email, password }: SignUpInput) => {
     setServerError('')

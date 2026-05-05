@@ -23,7 +23,7 @@ test.describe('sign-in flow', () => {
     ).toBeVisible()
   })
 
-  test('wrong password shows Invalid password and stays on /sign-in', async ({
+  test('wrong password shows Invalid email or password and stays on /sign-in', async ({
     page
   }) => {
     await page.goto('/sign-in')
@@ -31,17 +31,19 @@ test.describe('sign-in flow', () => {
     await page.getByLabel(/password/i).fill('WrongPassword!')
     await page.getByRole('button', { name: /sign in/i }).click()
     await expect(page.getByTestId('sign-in-error')).toHaveText(
-      /invalid password/i
+      /invalid email or password/i
     )
     await expect(page).toHaveURL(/\/sign-in$/)
   })
 
-  test('unknown user shows No user found', async ({ page }) => {
+  test('unknown user shows Invalid email or password', async ({ page }) => {
     await page.goto('/sign-in')
     await page.getByLabel(/email/i).fill('ghost@nowhere.dev')
     await page.getByLabel(/password/i).fill('Whatever123!')
     await page.getByRole('button', { name: /sign in/i }).click()
-    await expect(page.getByTestId('sign-in-error')).toHaveText(/no user found/i)
+    await expect(page.getByTestId('sign-in-error')).toHaveText(
+      /invalid email or password/i
+    )
     await expect(page).toHaveURL(/\/sign-in$/)
   })
 
