@@ -6,7 +6,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Material UI](https://img.shields.io/badge/Material_UI-9-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
-[![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Prisma](https://img.shields.io/badge/Prisma-7-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4-000000?style=for-the-badge&logo=auth0&logoColor=white)](https://next-auth.js.org/)
 
@@ -20,7 +20,7 @@
 
 - **Next.js 16** with App Router (Turbopack default)
 - **React 19**, **TypeScript 6** (strict)
-- **Prisma 6** with PostgreSQL
+- **Prisma 7** with PostgreSQL
 - **Material UI 9** with Emotion + `@mui/material-nextjs` AppRouterCacheProvider (custom dark theme at `src/theme.ts`)
 - **`@mui/icons-material`** for icons
 - **Geist** fonts wired into the MUI theme

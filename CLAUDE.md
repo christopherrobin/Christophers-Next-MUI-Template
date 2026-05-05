@@ -10,7 +10,7 @@ A public Next.js 16 starter template with TypeScript, Material UI 9 + Emotion, P
 - React 19, TypeScript 6 (strict)
 - Material UI 9.0 + `@mui/material-nextjs` (AppRouterCacheProvider) + `@emotion/react` + `@emotion/styled` + `@mui/icons-material`
 - Custom MUI theme at `src/theme.ts` — dark mode, primary `#20cb91` (white contrastText)
-- Prisma 6 + PostgreSQL
+- Prisma 7 + PostgreSQL
 - NextAuth.js 4 (Credentials provider, bcryptjs)
 - Zod 4 + react-hook-form 7 (form validation, shared client/server schemas)
 - Jest 30 + React Testing Library
