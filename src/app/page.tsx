@@ -183,7 +183,7 @@ export default function Home() {
                 Sign Up
               </Button>
               <Button
-                variant="text"
+                variant="outlined"
                 component="a"
                 href="/sign-in"
                 size="large"
@@ -203,101 +203,6 @@ export default function Home() {
                 View on GitHub
               </Button>
             </Stack>
-          </Box>
-          <Box
-            sx={{
-              flexShrink: 0,
-              position: 'relative',
-              width: { xs: 220, sm: 260, md: 300 },
-              height: { xs: 220, sm: 260, md: 300 },
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            {/* Soft halo */}
-            <Box
-              sx={{
-                position: 'absolute',
-                inset: -12,
-                borderRadius: '50%',
-                background: (theme) =>
-                  `conic-gradient(from 90deg, ${theme.palette.primary.main}, ${alpha(
-                    theme.palette.primary.main,
-                    0.1
-                  )}, ${theme.palette.primary.main})`,
-                filter: 'blur(18px)',
-                opacity: 0.55
-              }}
-            />
-            {/* Inner orb */}
-            <Box
-              sx={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                borderRadius: '50%',
-                border: (theme) =>
-                  `3px solid ${alpha(theme.palette.primary.main, 0.6)}`,
-                boxShadow: (theme) =>
-                  `0 20px 60px ${alpha(theme.palette.primary.main, 0.25)}`,
-                background: (theme) =>
-                  `radial-gradient(circle at 30% 30%, ${alpha(
-                    theme.palette.primary.main,
-                    0.35
-                  )} 0%, ${alpha(theme.palette.primary.main, 0.05)} 60%, transparent 100%)`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontFamily: 'var(--font-geist-sans, sans-serif)'
-              }}
-            >
-              {/* Big version label */}
-              <Box
-                sx={{
-                  textAlign: 'center',
-                  color: 'common.white'
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: 'var(--font-geist-mono, monospace)',
-                    fontSize: '0.7rem',
-                    letterSpacing: 3,
-                    color: 'primary.main',
-                    mb: 1
-                  }}
-                >
-                  v1
-                </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 900,
-                    fontSize: { xs: '3rem', md: '3.75rem' },
-                    lineHeight: 1,
-                    letterSpacing: -2,
-                    background: (theme) =>
-                      `linear-gradient(135deg, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.main, 0.5)})`,
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
-                  }}
-                >
-                  Howdy
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: 'var(--font-geist-mono, monospace)',
-                    fontSize: '0.65rem',
-                    letterSpacing: 2,
-                    color: (theme) => alpha(theme.palette.common.white, 0.5),
-                    mt: 1
-                  }}
-                >
-                  Next 16 · MUI 9
-                </Typography>
-              </Box>
-            </Box>
           </Box>
         </Stack>
 
@@ -468,6 +373,7 @@ export default function Home() {
                 key={feature.title}
                 elevation={0}
                 sx={{
+                  p: { xs: 3, md: 4 },
                   height: '100%',
                   border: (theme) =>
                     `1px solid ${alpha(theme.palette.primary.main, 0.15)}`,
@@ -508,6 +414,7 @@ export default function Home() {
         <Card
           elevation={0}
           sx={{
+            p: { xs: 4, md: 6 },
             textAlign: 'center',
             border: (theme) =>
               `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
