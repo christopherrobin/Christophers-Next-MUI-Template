@@ -76,4 +76,29 @@ test.describe('sign-in flow', () => {
       page.getByRole('heading', { name: /^sign up$/i })
     ).toBeVisible()
   })
+
+  // Open-redirect proofs: isSafeRelativePath must reject these and the
+  // happy-path post-signin destination must fall back to /dashboard,
+  // never redirect to the attacker URL.
+  test('rejects protocol-relative callbackUrl and lands on /dashboard', async ({
+    page
+  }) => {
+    await page.goto('/sign-in?callbackUrl=//evil.com')
+    await page.getByLabel(/email/i).fill(TEST_EMAIL)
+    await page.getByLabel(/password/i).fill(TEST_PASSWORD)
+    await page.getByRole('button', { name: /sign in/i }).click()
+    await page.waitForURL('**/dashboard')
+    await expect(page).not.toHaveURL(/evil\.com/)
+  })
+
+  test('rejects absolute https callbackUrl and lands on /dashboard', async ({
+    page
+  }) => {
+    await page.goto('/sign-in?callbackUrl=https://evil.com/steal')
+    await page.getByLabel(/email/i).fill(TEST_EMAIL)
+    await page.getByLabel(/password/i).fill(TEST_PASSWORD)
+    await page.getByRole('button', { name: /sign in/i }).click()
+    await page.waitForURL('**/dashboard')
+    await expect(page).not.toHaveURL(/evil\.com/)
+  })
 })

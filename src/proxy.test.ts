@@ -4,7 +4,7 @@
 import { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
-import { proxy } from './proxy'
+import { config, proxy } from './proxy'
 
 jest.mock('next-auth/jwt', () => ({
   getToken: jest.fn()
@@ -73,5 +73,25 @@ describe('proxy', () => {
       const res = await proxy(makeRequest('http://localhost/sign-up'))
       expect(res.headers.get('location')).toBeNull()
     })
+
+    it('propagates getToken rejections (no swallow / try-catch)', async () => {
+      mockedGetToken.mockRejectedValueOnce(new Error('malformed jwt'))
+      await expect(
+        proxy(makeRequest('http://localhost/dashboard'))
+      ).rejects.toThrow('malformed jwt')
+    })
+  })
+})
+
+describe('proxy.config.matcher', () => {
+  it('includes all auth-gated and auth-redirect routes', () => {
+    expect(config.matcher).toEqual(
+      expect.arrayContaining([
+        '/sign-in',
+        '/sign-up',
+        '/dashboard',
+        '/dashboard/:path*'
+      ])
+    )
   })
 })
