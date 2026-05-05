@@ -3,7 +3,7 @@ import { render, type RenderOptions } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { ReactElement, ReactNode } from 'react'
 
-import theme from '../../theme'
+import theme from '@/theme'
 
 interface ProvidersProps {
   children: ReactNode

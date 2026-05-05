@@ -43,7 +43,7 @@ export default function Home() {
             href="https://github.com/christopherrobin/Christophers-Next-MUI-Template"
             target="_blank"
             rel="noopener noreferrer"
-            startIcon={<GitHubIcon style={{ width: 24, height: 24 }} />}
+            startIcon={<GitHubIcon sx={{ width: 24, height: 24 }} />}
             sx={{ mb: 2, width: '100%' }}
           >
             View on GitHub
@@ -60,7 +60,7 @@ export default function Home() {
           component="a"
           href="/sign-up"
           sx={{ alignSelf: 'center', my: 1, width: '100%' }}
-          endIcon={<RocketLaunch style={{ width: 24, height: 24 }} />}
+          endIcon={<RocketLaunch sx={{ width: 24, height: 24 }} />}
         >
           Sign Up
         </Button>

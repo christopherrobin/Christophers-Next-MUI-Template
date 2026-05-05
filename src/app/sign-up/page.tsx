@@ -1,18 +1,12 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Link,
-  type FormHelperTextProps
-} from '@mui/material'
+import { Box, Typography, TextField, Button, Link } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { helperTextSlot } from '@/lib/form-utils'
 import { signUpSchema, type SignUpInput } from '@/lib/schemas'
 
 export default function SignUp() {
@@ -108,11 +102,7 @@ export default function SignUp() {
               autoFocus
               error={!!fieldState.error}
               helperText={fieldState.error?.message}
-              slotProps={{
-                formHelperText: {
-                  'data-testid': 'sign-up-email-error'
-                } as Partial<FormHelperTextProps>
-              }}
+              slotProps={helperTextSlot('sign-up-email-error')}
             />
           )}
         />
@@ -128,11 +118,7 @@ export default function SignUp() {
               fullWidth
               error={!!fieldState.error}
               helperText={fieldState.error?.message}
-              slotProps={{
-                formHelperText: {
-                  'data-testid': 'sign-up-password-error'
-                } as Partial<FormHelperTextProps>
-              }}
+              slotProps={helperTextSlot('sign-up-password-error')}
             />
           )}
         />

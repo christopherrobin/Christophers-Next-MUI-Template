@@ -35,19 +35,19 @@ const sessionCallback = authOptions.callbacks!.session!
 describe('authOptions.authorize', () => {
   it('throws when credentials are missing', async () => {
     await expect(authorize(undefined)).rejects.toThrow(
-      'Missing email or password'
+      'Invalid email or password'
     )
   })
 
   it('throws when only email is provided', async () => {
     await expect(authorize({ email: 'a@b.com', password: '' })).rejects.toThrow(
-      'Missing email or password'
+      'Invalid email or password'
     )
   })
 
   it('throws when only password is provided', async () => {
     await expect(authorize({ email: '', password: 'pw' })).rejects.toThrow(
-      'Missing email or password'
+      'Invalid email or password'
     )
   })
 

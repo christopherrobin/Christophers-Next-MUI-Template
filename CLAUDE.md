@@ -9,7 +9,7 @@ A public Next.js 16 starter template with TypeScript, Material UI 9 + Emotion, P
 - Next.js 16 (App Router, Turbopack default)
 - React 19, TypeScript 6 (strict)
 - Material UI 9.0 + `@mui/material-nextjs` (AppRouterCacheProvider) + `@emotion/react` + `@emotion/styled` + `@mui/icons-material`
-- Custom MUI theme at `theme.ts` (root) — dark mode, primary `#20cb91` (white contrastText)
+- Custom MUI theme at `src/theme.ts` — dark mode, primary `#20cb91` (white contrastText)
 - Prisma 6 + PostgreSQL
 - NextAuth.js 4 (Credentials provider, bcryptjs)
 - Zod 4 + react-hook-form 7 (form validation, shared client/server schemas)
@@ -21,8 +21,8 @@ A public Next.js 16 starter template with TypeScript, Material UI 9 + Emotion, P
 ## Project Layout
 
 ```
-theme.ts         # MUI theme — dark palette, typography (Geist), component overrides
 src/
+  theme.ts       # MUI theme — dark palette, typography (Geist), component overrides
   app/           # App Router pages + API routes (auth, sign-up)
   components/    # Spinner, Providers (wraps SessionProvider + MUI ThemeProvider)
   lib/
@@ -108,7 +108,7 @@ Geist Sans + Geist Mono are loaded via `next/font/google` in `src/app/layout.tsx
 typography: { fontFamily: 'var(--font-geist-sans)', ... }
 ```
 
-This is **required** — without the theme wiring, MUI components fall back to the default Roboto regardless of body className.
+This is **required** — without the theme wiring, MUI components fall back to the default Roboto regardless of body className. The theme file lives at `src/theme.ts`.
 
 ## What NOT to do
 

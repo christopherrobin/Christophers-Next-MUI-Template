@@ -1,18 +1,12 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Box,
-  Typography,
-  Link,
-  TextField,
-  Button,
-  type FormHelperTextProps
-} from '@mui/material'
+import { Box, Typography, Link, TextField, Button } from '@mui/material'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { helperTextSlot } from '@/lib/form-utils'
 import { signInSchema, type SignInInput } from '@/lib/schemas'
 
 function isSafeRelativePath(value: string | null): value is string {
@@ -87,11 +81,7 @@ function SignInForm() {
             variant="outlined"
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
-            slotProps={{
-              formHelperText: {
-                'data-testid': 'sign-in-email-error'
-              } as Partial<FormHelperTextProps>
-            }}
+            slotProps={helperTextSlot('sign-in-email-error')}
           />
         )}
       />
@@ -108,11 +98,7 @@ function SignInForm() {
             variant="outlined"
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
-            slotProps={{
-              formHelperText: {
-                'data-testid': 'sign-in-password-error'
-              } as Partial<FormHelperTextProps>
-            }}
+            slotProps={helperTextSlot('sign-in-password-error')}
           />
         )}
       />

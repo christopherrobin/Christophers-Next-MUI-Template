@@ -11,7 +11,7 @@
 - **Next.js 16** with App Router (Turbopack default)
 - **React 19**, **TypeScript 6** (strict)
 - **Prisma 6** with PostgreSQL
-- **Material UI 9** with Emotion + `@mui/material-nextjs` AppRouterCacheProvider (custom dark theme at `theme.ts`)
+- **Material UI 9** with Emotion + `@mui/material-nextjs` AppRouterCacheProvider (custom dark theme at `src/theme.ts`)
 - **`@mui/icons-material`** for icons
 - **Geist** fonts wired into the MUI theme
 - **NextAuth.js 4** for authentication (email & password, JWT sessions)
@@ -61,7 +61,7 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ## Project Structure
 
-- `theme.ts` — Centralized MUI theme (dark palette, Geist typography, component overrides)
+- `src/theme.ts` — Centralized MUI theme (dark palette, Geist typography, component overrides)
 - `src/app/` — Next.js App Router pages (home, sign-up, sign-in, dashboard, `not-found.tsx`)
 - `src/components/` — Reusable UI components (Spinner, Providers)
 - `src/lib/` — Prisma client, NextAuth config, env validation (`env.ts`), API helpers (`api-utils.ts`), shared Zod schemas (`schemas.ts`)
@@ -112,13 +112,13 @@ Sign-in and sign-up forms use **react-hook-form + Zod** via `zodResolver`, with 
 
 ## Theming
 
-The MUI theme lives at `theme.ts` (dark mode, primary `#20cb91`). Geist Sans is wired in via:
+The MUI theme lives at `src/theme.ts` (dark mode, primary `#20cb91`). Geist Sans is wired in via:
 
 ```ts
 typography: { fontFamily: 'var(--font-geist-sans)', ... }
 ```
 
-The font itself is loaded with `next/font/google` in `src/app/layout.tsx`. Without the `theme.ts` wiring, MUI components fall back to Roboto regardless of body styles.
+The font itself is loaded with `next/font/google` in `src/app/layout.tsx`. Without the `src/theme.ts` wiring, MUI components fall back to Roboto regardless of body styles.
 
 ## Testing
 

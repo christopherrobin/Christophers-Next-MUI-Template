@@ -80,10 +80,8 @@ const themeOptions: ThemeOptions = {
       }
     },
     MuiCard: {
-      styleOverrides: {
-        root: {
-          p: 6
-        }
+      defaultProps: {
+        sx: { p: 6 }
       }
     },
     MuiDivider: {
