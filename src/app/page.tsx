@@ -93,20 +93,12 @@ const stack = [
     blurb: 'Custom theme, Emotion + AppRouterCacheProvider, Geist wired.'
   },
   {
-    name: 'Prisma',
+    name: 'Prisma + Postgres',
     version: '6',
     badge:
       'https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma&logoColor=white',
     url: 'https://www.prisma.io/',
-    blurb: 'Type-safe ORM, schema migrations, singleton client.'
-  },
-  {
-    name: 'PostgreSQL',
-    version: '',
-    badge:
-      'https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white',
-    url: 'https://www.postgresql.org/',
-    blurb: 'Battle-tested, ACID, scales to billions of rows.'
+    blurb: 'Type-safe ORM, schema migrations, ACID Postgres backend.'
   },
   {
     name: 'NextAuth.js',
