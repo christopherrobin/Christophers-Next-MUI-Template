@@ -4,7 +4,7 @@ import {
   ThemeOptions,
   responsiveFontSizes
 } from '@mui/material/styles'
-import { PaletteOptions } from '@mui/material/styles/createPalette'
+import type { PaletteOptions } from '@mui/material/styles'
 
 const primaryMain = '#20cb91'
 const secondaryMain = '#8a92b2'

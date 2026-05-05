@@ -1,6 +1,13 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Box, Typography, Link, TextField, Button } from '@mui/material'
+import {
+  Box,
+  Typography,
+  Link,
+  TextField,
+  Button,
+  type FormHelperTextProps
+} from '@mui/material'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
@@ -78,11 +85,11 @@ function SignInForm() {
             variant="outlined"
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
-            FormHelperTextProps={
-              {
+            slotProps={{
+              formHelperText: {
                 'data-testid': 'sign-in-email-error'
-              } as React.HTMLAttributes<HTMLDivElement>
-            }
+              } as Partial<FormHelperTextProps>
+            }}
           />
         )}
       />
@@ -99,11 +106,11 @@ function SignInForm() {
             variant="outlined"
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
-            FormHelperTextProps={
-              {
+            slotProps={{
+              formHelperText: {
                 'data-testid': 'sign-in-password-error'
-              } as React.HTMLAttributes<HTMLDivElement>
-            }
+              } as Partial<FormHelperTextProps>
+            }}
           />
         )}
       />

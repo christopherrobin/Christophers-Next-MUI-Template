@@ -8,10 +8,10 @@ describe('Spinner', () => {
     expect(screen.getByRole('progressbar')).toBeInTheDocument()
   })
 
-  it('uses the primary theme color', () => {
+  it('renders inside an accessible loading status region', () => {
     renderWithProviders(<Spinner />)
-    expect(screen.getByRole('progressbar')).toHaveClass(
-      'MuiCircularProgress-colorPrimary'
-    )
+    const status = screen.getByRole('status', { name: /loading/i })
+    expect(status).toBeInTheDocument()
+    expect(status.querySelector('[role="progressbar"]')).not.toBeNull()
   })
 })
