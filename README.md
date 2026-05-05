@@ -1,5 +1,7 @@
 # Christophers-Next-MUI-Template
 
+[![CI](https://github.com/christopherrobin/Christophers-Next-MUI-Template/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/christopherrobin/Christophers-Next-MUI-Template/actions/workflows/ci.yml)
+
 ![Howdy Preview](public/welcome.png)
 
 ## A modern, minimal authentication starter for developers, built with Next.js, TypeScript, Prisma, and Material UI.
@@ -125,7 +127,6 @@ The font itself is loaded with `next/font/google` in `src/app/layout.tsx`. Witho
 This project supports two main testing methods:
 
 - **Unit & Component Testing** (Jest + Testing Library):
-
   - Run all tests: `yarn test`
   - Run a specific test file: `yarn test src/components/Spinner.test.tsx`
   - Tests are co-located next to the components they cover (e.g. `Spinner.tsx` + `Spinner.test.tsx`).
