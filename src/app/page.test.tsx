@@ -13,9 +13,9 @@ describe('Home page', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders a Join link pointing to /join', () => {
-    const join = screen.getByRole('link', { name: /^join$/i })
-    expect(join).toHaveAttribute('href', '/join')
+  it('renders a Sign Up link pointing to /sign-up', () => {
+    const signUp = screen.getByRole('link', { name: /^sign up$/i })
+    expect(signUp).toHaveAttribute('href', '/sign-up')
   })
 
   it('renders a Sign In link pointing to /sign-in', () => {

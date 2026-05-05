@@ -124,8 +124,8 @@ function SignInForm() {
       <Box mt={2} textAlign="center">
         <Typography variant="body2" color="text.secondary">
           Don&apos;t have an account?{' '}
-          <Link href="/join" color="primary" underline="hover">
-            Join now
+          <Link href="/sign-up" color="primary" underline="hover">
+            Sign up
           </Link>
         </Typography>
       </Box>

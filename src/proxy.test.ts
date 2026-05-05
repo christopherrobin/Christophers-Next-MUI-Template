@@ -28,8 +28,8 @@ describe('proxy', () => {
       expect(res.headers.get('location')).toBe('http://localhost/dashboard')
     })
 
-    it('redirects authed users away from /join to /dashboard', async () => {
-      const res = await proxy(makeRequest('http://localhost/join'))
+    it('redirects authed users away from /sign-up to /dashboard', async () => {
+      const res = await proxy(makeRequest('http://localhost/sign-up'))
       expect(res.status).toBe(307)
       expect(res.headers.get('location')).toBe('http://localhost/dashboard')
     })
@@ -69,8 +69,8 @@ describe('proxy', () => {
       expect(res.headers.get('location')).toBeNull()
     })
 
-    it('passes unauthed users through to /join', async () => {
-      const res = await proxy(makeRequest('http://localhost/join'))
+    it('passes unauthed users through to /sign-up', async () => {
+      const res = await proxy(makeRequest('http://localhost/sign-up'))
       expect(res.headers.get('location')).toBeNull()
     })
   })

@@ -32,10 +32,12 @@ test.describe('middleware (anonymous)', () => {
     await expect(page.getByLabel(/email/i)).toBeVisible()
   })
 
-  test('/join stays accessible', async ({ page }) => {
-    await page.goto('/join')
-    await expect(page).toHaveURL(/\/join$/)
-    await expect(page.getByRole('heading', { name: /^join$/i })).toBeVisible()
+  test('/sign-up stays accessible', async ({ page }) => {
+    await page.goto('/sign-up')
+    await expect(page).toHaveURL(/\/sign-up$/)
+    await expect(
+      page.getByRole('heading', { name: /^sign up$/i })
+    ).toBeVisible()
     await expect(page.getByLabel(/email/i)).toBeVisible()
   })
 
@@ -53,8 +55,8 @@ test.describe('middleware (authenticated)', () => {
     expect(new URL(authedPage.url()).pathname).toBe('/dashboard')
   })
 
-  test('/join redirects to /dashboard', async ({ authedPage }) => {
-    await authedPage.goto('/join')
+  test('/sign-up redirects to /dashboard', async ({ authedPage }) => {
+    await authedPage.goto('/sign-up')
     await authedPage.waitForURL('**/dashboard')
     expect(new URL(authedPage.url()).pathname).toBe('/dashboard')
   })

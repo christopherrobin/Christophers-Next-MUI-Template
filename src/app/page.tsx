@@ -52,11 +52,11 @@ export default function Home() {
         <Button
           variant="contained"
           component="a"
-          href="/join"
+          href="/sign-up"
           sx={{ alignSelf: 'center', my: 1, width: '100%' }}
           endIcon={<RocketLaunch style={{ width: 24, height: 24 }} />}
         >
-          Join
+          Sign Up
         </Button>
         <Button
           variant="text"

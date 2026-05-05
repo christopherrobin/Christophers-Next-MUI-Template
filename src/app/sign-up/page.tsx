@@ -6,9 +6,9 @@ import { signIn, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { joinSchema, type JoinInput } from '@/lib/schemas'
+import { signUpSchema, type SignUpInput } from '@/lib/schemas'
 
-export default function Join() {
+export default function SignUp() {
   const { status } = useSession()
   const router = useRouter()
   const [serverError, setServerError] = useState('')
@@ -16,8 +16,8 @@ export default function Join() {
     control,
     handleSubmit,
     formState: { isSubmitting }
-  } = useForm<JoinInput>({
-    resolver: zodResolver(joinSchema),
+  } = useForm<SignUpInput>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: { email: '', password: '' }
   })
 
@@ -27,11 +27,11 @@ export default function Join() {
     }
   }, [status, router])
 
-  const onSubmit = async ({ email, password }: JoinInput) => {
+  const onSubmit = async ({ email, password }: SignUpInput) => {
     setServerError('')
 
     try {
-      const res = await fetch('/api/join', {
+      const res = await fetch('/api/sign-up', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -57,7 +57,7 @@ export default function Join() {
         setServerError(data.error || 'Failed to create account')
       }
     } catch (err) {
-      console.error('Join error:', err)
+      console.error('Sign-up error:', err)
       setServerError('An unexpected error occurred')
     }
   }
@@ -72,7 +72,7 @@ export default function Join() {
       p={4}
     >
       <Typography variant="h3" color="primary" fontWeight={700} mb={4}>
-        Join
+        Sign Up
       </Typography>
       <Box
         component="form"
@@ -99,7 +99,7 @@ export default function Join() {
               helperText={fieldState.error?.message}
               FormHelperTextProps={
                 {
-                  'data-testid': 'join-email-error'
+                  'data-testid': 'sign-up-email-error'
                 } as React.HTMLAttributes<HTMLDivElement>
               }
             />
@@ -119,7 +119,7 @@ export default function Join() {
               helperText={fieldState.error?.message}
               FormHelperTextProps={
                 {
-                  'data-testid': 'join-password-error'
+                  'data-testid': 'sign-up-password-error'
                 } as React.HTMLAttributes<HTMLDivElement>
               }
             />
@@ -132,10 +132,10 @@ export default function Join() {
           disabled={isSubmitting}
           sx={{ mt: 2 }}
         >
-          {isSubmitting ? 'Joining...' : 'Join'}
+          {isSubmitting ? 'Signing Up...' : 'Sign Up'}
         </Button>
         {serverError && (
-          <Typography color="error" data-testid="join-error">
+          <Typography color="error" data-testid="sign-up-error">
             {serverError}
           </Typography>
         )}

@@ -66,10 +66,12 @@ test.describe('sign-in flow', () => {
     expect(calledNextAuth).toBe(false)
   })
 
-  test('Join now link navigates to /join', async ({ page }) => {
+  test('Sign up link navigates to /sign-up', async ({ page }) => {
     await page.goto('/sign-in')
-    await page.getByRole('link', { name: /join now/i }).click()
-    await page.waitForURL('**/join')
-    await expect(page.getByRole('heading', { name: /^join$/i })).toBeVisible()
+    await page.getByRole('link', { name: /sign up/i }).click()
+    await page.waitForURL('**/sign-up')
+    await expect(
+      page.getByRole('heading', { name: /^sign up$/i })
+    ).toBeVisible()
   })
 })

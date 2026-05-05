@@ -21,7 +21,7 @@ A public Next.js 15 starter template with TypeScript, Material UI 5 + Emotion, P
 ```
 theme.ts         # MUI theme — dark palette, typography (Geist), component overrides
 src/
-  app/           # App Router pages + API routes (auth, join)
+  app/           # App Router pages + API routes (auth, sign-up)
   components/    # Spinner, Providers (wraps SessionProvider + MUI ThemeProvider)
   lib/           # auth.ts (NextAuth config), prisma.ts (singleton client)
   hooks/         # custom React hooks
@@ -73,7 +73,7 @@ e2e/             # Playwright specs
 - NextAuth Credentials provider; passwords hashed with bcryptjs; JWT sessions.
 - `src/middleware.ts` behavior:
   - `/dashboard/*` → requires auth (redirects unauth users to `/sign-in?callbackUrl=...`)
-  - `/sign-in` and `/join` → redirect authed users to `/dashboard`
+  - `/sign-in` and `/sign-up` → redirect authed users to `/dashboard`
   - `/` → public for everyone (no redirect even if authed)
 
 ## Env

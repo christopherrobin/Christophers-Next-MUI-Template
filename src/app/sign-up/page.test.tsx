@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 
-import Join from './page'
+import SignUp from './page'
 
 import {
   renderWithProviders,
@@ -53,23 +53,28 @@ beforeEach(() => {
   mockedUseRouter.mockReturnValue(currentRouter as never)
 })
 
-async function fillAndSubmit(email = 'a@b.com', password = 'ChrisIsTheBest42!') {
+async function fillAndSubmit(
+  email = 'a@b.com',
+  password = 'ChrisIsTheBest42!'
+) {
   const user = setupUser()
   await user.type(screen.getByLabelText(/email/i), email)
   await user.type(screen.getByLabelText(/password/i), password)
-  await user.click(screen.getByRole('button', { name: /^join$/i }))
+  await user.click(screen.getByRole('button', { name: /^sign up$/i }))
 }
 
-describe('Join page', () => {
-  it('renders email, password, and join button', () => {
-    renderWithProviders(<Join />)
+describe('SignUp page', () => {
+  it('renders email, password, and sign-up button', () => {
+    renderWithProviders(<SignUp />)
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /^join$/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: /^sign up$/i })
+    ).toBeInTheDocument()
   })
 
   it('renders a Sign In link to /sign-in', () => {
-    renderWithProviders(<Join />)
+    renderWithProviders(<SignUp />)
     const link = screen.getByRole('link', { name: /sign in/i })
     expect(link).toHaveAttribute('href', '/sign-in')
   })
@@ -79,11 +84,11 @@ describe('Join page', () => {
     mockedUseRouter.mockReturnValue(router as never)
     setSessionStatus('authenticated')
 
-    renderWithProviders(<Join />)
+    renderWithProviders(<SignUp />)
     expect(router.replace).toHaveBeenCalledWith('/dashboard')
   })
 
-  it('POSTs /api/join then signs in on success', async () => {
+  it('POSTs /api/sign-up then signs in on success', async () => {
     const fetchMock = jest
       .fn()
       .mockResolvedValue({ ok: true, json: async () => ({ ok: true }) })
@@ -96,13 +101,16 @@ describe('Join page', () => {
       code: undefined
     } as never)
 
-    renderWithProviders(<Join />)
+    renderWithProviders(<SignUp />)
     await fillAndSubmit('new@example.com', 'ChrisIsTheBest42!')
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/join', {
+    expect(fetchMock).toHaveBeenCalledWith('/api/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'new@example.com', password: 'ChrisIsTheBest42!' })
+      body: JSON.stringify({
+        email: 'new@example.com',
+        password: 'ChrisIsTheBest42!'
+      })
     })
     expect(mockedSignIn).toHaveBeenCalledWith('credentials', {
       email: 'new@example.com',
@@ -117,17 +125,17 @@ describe('Join page', () => {
     expect(currentRouter.refresh).toHaveBeenCalled()
   })
 
-  it('shows the API error message when /api/join responds non-ok', async () => {
+  it('shows the API error message when /api/sign-up responds non-ok', async () => {
     const fetchMock = jest.fn().mockResolvedValue({
       ok: false,
       json: async () => ({ error: 'Email already in use' })
     })
     ;(globalThis as unknown as { fetch: jest.Mock }).fetch = fetchMock
 
-    renderWithProviders(<Join />)
+    renderWithProviders(<SignUp />)
     await fillAndSubmit('dup@example.com', 'ChrisIsTheBest42!')
 
-    expect(await screen.findByTestId('join-error')).toHaveTextContent(
+    expect(await screen.findByTestId('sign-up-error')).toHaveTextContent(
       /email already in use/i
     )
     expect(mockedSignIn).not.toHaveBeenCalled()
@@ -138,10 +146,10 @@ describe('Join page', () => {
     const fetchMock = jest.fn().mockRejectedValue(new Error('network'))
     ;(globalThis as unknown as { fetch: jest.Mock }).fetch = fetchMock
 
-    renderWithProviders(<Join />)
+    renderWithProviders(<SignUp />)
     await fillAndSubmit()
 
-    expect(await screen.findByTestId('join-error')).toHaveTextContent(
+    expect(await screen.findByTestId('sign-up-error')).toHaveTextContent(
       /unexpected error/i
     )
     consoleSpy.mockRestore()
@@ -157,15 +165,17 @@ describe('Join page', () => {
     )
     ;(globalThis as unknown as { fetch: jest.Mock }).fetch = fetchMock
 
-    renderWithProviders(<Join />)
+    renderWithProviders(<SignUp />)
     await fillAndSubmit()
 
-    const button = screen.getByRole('button', { name: /joining/i })
+    const button = screen.getByRole('button', { name: /signing up/i })
     expect(button).toBeDisabled()
 
     resolveFetch({ ok: false, json: async () => ({ error: 'x' }) })
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /^join$/i })).not.toBeDisabled()
+      expect(
+        screen.getByRole('button', { name: /^sign up$/i })
+      ).not.toBeDisabled()
     })
   })
 })
