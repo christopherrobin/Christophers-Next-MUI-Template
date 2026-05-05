@@ -163,7 +163,7 @@ describe('authOptions.callbacks.session', () => {
         newSession: undefined,
         trigger: 'update'
       })
-    ).rejects.toThrow('No user found')
+    ).rejects.toThrow('Invalid session')
   })
 
   it('mirrors token fields onto session.user when sub is present', async () => {

@@ -19,6 +19,36 @@ const nextConfig: NextConfig = {
         {
           key: 'Referrer-Policy',
           value: 'strict-origin-when-cross-origin'
+        },
+        {
+          key: 'Strict-Transport-Security',
+          value: 'max-age=63072000; includeSubDomains; preload'
+        },
+        {
+          key: 'Permissions-Policy',
+          value:
+            'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()'
+        },
+        {
+          // Baseline CSP for a Next 16 + MUI 9 (Emotion) + NextAuth starter.
+          // Report-Only: forkers can promote to Content-Security-Policy
+          // (enforcing) once they've audited their own dependencies.
+          // 'unsafe-inline' on style-src is required for Emotion/MUI runtime
+          // style injection (also matches the Tailwind 4 sibling baseline).
+          // 'unsafe-eval' on script-src covers Next 16 dev / React 19
+          // hydration. frame-ancestors 'none' complements X-Frame-Options.
+          key: 'Content-Security-Policy-Report-Only',
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: blob:",
+            "font-src 'self' data:",
+            "connect-src 'self'",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'"
+          ].join('; ')
         }
       ]
     }
