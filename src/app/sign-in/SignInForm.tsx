@@ -64,13 +64,15 @@ function SignInForm() {
   return (
     <Box
       component="form"
-      display="flex"
-      flexDirection="column"
-      gap={2}
-      width="100%"
-      maxWidth={400}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        width: '100%',
+        maxWidth: 400
+      }}
     >
       <Controller
         name="email"
@@ -128,8 +130,18 @@ function SignInForm() {
           {serverError}
         </Typography>
       )}
-      <Box mt={2} textAlign="center">
-        <Typography variant="body2" color="text.secondary">
+      <Box
+        sx={{
+          mt: 2,
+          textAlign: 'center'
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'text.secondary'
+          }}
+        >
           Don&apos;t have an account?{' '}
           <Link href="/sign-up" color="primary" underline="hover">
             Sign up

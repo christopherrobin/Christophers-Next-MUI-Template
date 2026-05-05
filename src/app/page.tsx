@@ -7,22 +7,28 @@ import React from 'react'
 export default function Home() {
   return (
     <Box
-      minHeight="100vh"
-      px={6}
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
+      sx={{
+        minHeight: '100vh',
+        px: 6,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
     >
       <Box
         component="main"
-        display="flex"
-        flexDirection="column"
-        gap={2}
-        alignItems={{ xs: 'center', sm: 'flex-start' }}
-        width={{ xs: '100%', md: '66%', lg: '50%' }}
-        textAlign={{ xs: 'center', sm: 'left' }}
-        sx={{ rowGap: 2, mt: 10, mb: 2 }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          alignItems: { xs: 'center', sm: 'flex-start' },
+          width: { xs: '100%', md: '66%', lg: '50%' },
+          textAlign: { xs: 'center', sm: 'left' },
+          rowGap: 2,
+          mt: 10,
+          mb: 2
+        }}
       >
         <Typography variant="h1" color="primary">
           Howdy.

@@ -6,10 +6,12 @@ const Spinner: React.FC = () => {
     <Box
       role="status"
       aria-label="Loading"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="100%"
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
+      }}
     >
       <CircularProgress size={64} thickness={4} color="primary" />
     </Box>

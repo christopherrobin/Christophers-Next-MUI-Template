@@ -12,10 +12,12 @@ export default function Dashboard() {
   if (status === 'loading') {
     return (
       <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        minHeight="100vh"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh'
+        }}
       >
         <Spinner />
       </Box>
@@ -25,22 +27,50 @@ export default function Dashboard() {
   if (!session) return null
 
   return (
-    <Box px={4} py={6}>
-      <Box component="main" display="flex" flexDirection="column" gap={2}>
+    <Box
+      sx={{
+        px: 4,
+        py: 6
+      }}
+    >
+      <Box
+        component="main"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2
+        }}
+      >
         <Typography variant="h4" gutterBottom>
           Dashboard
         </Typography>
         <Typography
           variant="h6"
           color="primary"
-          fontWeight={700}
-          sx={{ wordBreak: 'break-word' }}
           gutterBottom
+          sx={{
+            fontWeight: 700,
+            wordBreak: 'break-word'
+          }}
         >
           Welcome, {email}
         </Typography>
-        <Box display="flex" flexDirection="column" gap={2} width="100%">
-          <Box display="flex" flexDirection="column" gap={2} width="100%">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            width: '100%'
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              width: '100%'
+            }}
+          >
             <Box
               component="pre"
               data-testid="session-json"

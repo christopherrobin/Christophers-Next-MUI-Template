@@ -71,25 +71,36 @@ export default function SignUp() {
 
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="100vh"
-      p={4}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        p: 4
+      }}
     >
-      <Typography variant="h3" color="primary" fontWeight={700} mb={4}>
+      <Typography
+        variant="h3"
+        color="primary"
+        sx={{
+          fontWeight: 700,
+          mb: 4
+        }}
+      >
         Sign Up
       </Typography>
       <Box
         component="form"
-        display="flex"
-        flexDirection="column"
-        gap={2}
-        width="100%"
-        maxWidth={400}
         onSubmit={handleSubmit(onSubmit)}
         noValidate
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          width: '100%',
+          maxWidth: 400
+        }}
       >
         <Controller
           name="email"
@@ -147,8 +158,18 @@ export default function SignUp() {
           </Typography>
         )}
       </Box>
-      <Box mt={2} textAlign="center">
-        <Typography variant="body2" color="text.secondary">
+      <Box
+        sx={{
+          mt: 2,
+          textAlign: 'center'
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{
+            color: 'text.secondary'
+          }}
+        >
           Already have an account?{' '}
           <Link href="/sign-in" color="primary" underline="hover">
             Sign In

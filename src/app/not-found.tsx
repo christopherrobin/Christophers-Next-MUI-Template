@@ -7,17 +7,32 @@ import React from 'react'
 export default function NotFound() {
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="100vh"
-      p={4}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        p: 4
+      }}
     >
-      <Typography variant="h2" color="primary" fontWeight={700} gutterBottom>
+      <Typography
+        variant="h2"
+        color="primary"
+        gutterBottom
+        sx={{
+          fontWeight: 700
+        }}
+      >
         404
       </Typography>
-      <Typography variant="h5" color="text.secondary" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          color: 'text.secondary'
+        }}
+      >
         Sorry, the page you are looking for does not exist.
       </Typography>
       <Button
