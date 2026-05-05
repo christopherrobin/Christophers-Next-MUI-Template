@@ -4,7 +4,7 @@
 import { compare } from 'bcryptjs'
 import type { JWT } from 'next-auth/jwt'
 
-import { authOptions } from './auth'
+import { authOptions, authorize } from './auth'
 import { prisma } from './prisma'
 
 import { makeUser } from '@/test-utils/factories'
@@ -21,14 +21,6 @@ jest.mock('bcryptjs', () => ({
 const mockedFindUnique = jest.mocked(prisma.user.findUnique)
 const mockedCompare = jest.mocked(compare)
 
-const credentialsProvider = authOptions.providers[0] as unknown as {
-  options: {
-    authorize: (
-      credentials: Record<'email' | 'password', string> | undefined
-    ) => Promise<unknown>
-  }
-}
-const authorize = credentialsProvider.options.authorize
 const jwtCallback = authOptions.callbacks!.jwt!
 const sessionCallback = authOptions.callbacks!.session!
 

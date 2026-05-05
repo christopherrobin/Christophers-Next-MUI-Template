@@ -6,7 +6,8 @@ body {
 
 body {
   font-family: var(--font-geist-sans);
-  color: var(--foreground);
+  /* MUI's CssBaseline owns the body color; this rule is a no-op fallback
+     for if Providers / theme isn't yet mounted. */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

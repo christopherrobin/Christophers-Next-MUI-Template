@@ -5,6 +5,33 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 
 import { prisma } from '@/lib/prisma'
 
+// Exported directly so unit tests can import it without reaching into the
+// provider's internals via `as unknown as`. NextAuth wraps this same
+// function inside the CredentialsProvider config below.
+export async function authorize(
+  credentials: Record<'email' | 'password', string> | undefined
+) {
+  if (!credentials?.email || !credentials?.password) {
+    throw new Error('Invalid email or password')
+  }
+  const user = await prisma.user.findUnique({
+    where: { email: credentials.email }
+  })
+  if (!user) throw new Error('Invalid email or password')
+  const valid = await compare(credentials.password, user.password)
+  if (!valid) throw new Error('Invalid email or password')
+
+  // Convert Date objects to ISO strings so the returned User is JSON-safe
+  // for the JWT/session callbacks downstream.
+  return {
+    id: user.id,
+    email: user.email,
+    createdAt: user.createdAt.toISOString(),
+    emailVerified: user.emailVerified ? user.emailVerified.toISOString() : null,
+    updatedAt: user.updatedAt.toISOString()
+  }
+}
+
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
@@ -17,29 +44,7 @@ export const authOptions: AuthOptions = {
         },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid email or password')
-        }
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email }
-        })
-        if (!user) throw new Error('Invalid email or password')
-        // Compare hashed password
-        const valid = await compare(credentials.password, user.password)
-        if (!valid) throw new Error('Invalid email or password')
-
-        // Return user with necessary fields, converting Date objects to ISO strings
-        return {
-          id: user.id,
-          email: user.email,
-          createdAt: user.createdAt.toISOString(),
-          emailVerified: user.emailVerified
-            ? user.emailVerified.toISOString()
-            : null,
-          updatedAt: user.updatedAt.toISOString()
-        }
-      }
+      authorize
     })
   ],
   session: { strategy: 'jwt' as const },

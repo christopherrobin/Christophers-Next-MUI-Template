@@ -39,7 +39,7 @@ describe('SignInForm', () => {
     expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument()
   })
 
-  it('calls signIn with credentials, redirect:false, and callbackUrl', async () => {
+  it('calls signIn with credentials and redirect:false', async () => {
     mockedSignIn.mockResolvedValueOnce({
       ok: true,
       error: undefined,
@@ -54,8 +54,7 @@ describe('SignInForm', () => {
     expect(mockedSignIn).toHaveBeenCalledWith('credentials', {
       email: 'user@example.com',
       password: 'secret',
-      redirect: false,
-      callbackUrl: '/dashboard'
+      redirect: false
     })
   })
 

@@ -9,11 +9,20 @@ import { Controller, useForm } from 'react-hook-form'
 import { helperTextSlot } from '@/lib/form-utils'
 import { signInSchema, type SignInInput } from '@/lib/schemas'
 
+// Strict relative-path validator for the post-signin callbackUrl param.
+// Rejects:
+//   - missing / non-string
+//   - protocol-relative (//evil.com)
+//   - backslash-prefixed (some browsers normalize \ to /)
+//   - any backslash, CRLF, or colon (header-splitting / scheme injection)
+//   - non-leading-slash values
 function isSafeRelativePath(value: string | null): value is string {
   if (!value) return false
   if (!value.startsWith('/')) return false
   if (value.startsWith('//')) return false
   if (value.startsWith('/\\')) return false
+  if (/[\\\r\n]/.test(value)) return false
+  if (value.includes(':')) return false
   return true
 }
 
@@ -37,15 +46,18 @@ function SignInForm() {
     const callbackUrl = isSafeRelativePath(requested) ? requested : '/dashboard'
 
     try {
+      // signIn() callbackUrl arg is a no-op when redirect: false — we
+      // handle navigation manually with the validated callbackUrl below.
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false,
-        callbackUrl
+        redirect: false
       })
       if (result?.error) {
         setServerError(result.error)
-      } else if (result?.url) {
+        return
+      }
+      if (result?.url) {
         router.push(callbackUrl)
         router.refresh()
       }

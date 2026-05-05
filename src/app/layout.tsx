@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Providers } from '@/components/Providers'
@@ -17,7 +17,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Christophers-Next-MUI-Template',
   description:
-    'Christophers-Next-MUI-Template is a Next.js template for building modern web applications.'
+    'A Next.js 16 + Material UI 9 starter template with auth, Prisma, and end-to-end type safety.',
+  keywords: ['Next.js', 'Material UI', 'NextAuth', 'Prisma', 'starter'],
+  authors: [{ name: 'Christopher Robin' }],
+  robots: { index: true, follow: true },
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' }
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' }
+  },
+  other: {
+    'msapplication-TileColor': '#20cb91',
+    'msapplication-TileImage': '/apple-touch-icon.png'
+  }
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#20cb91'
 }
 
 export default function RootLayout({
@@ -27,36 +49,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#2f855a" />
-        <meta name="description" content="Welcome to the club" />
-        <meta name="keywords" content="Christophers-Next-MUI-Template" />
-        <meta name="author" content="Christopher" />
-        <meta name="robots" content="index, follow" />
-        <meta name="googlebot" content="index, follow" />
-        <meta name="msapplication-TileColor" content="#2f855a" />
-        <meta name="msapplication-TileImage" content="/apple-touch-icon.png" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -33,22 +33,24 @@ export default function SignUp() {
 
       const data = await res.json()
 
-      if (res.ok) {
-        const signInResult = await signIn('credentials', {
-          email,
-          password,
-          redirect: false,
-          callbackUrl: '/dashboard'
-        })
-
-        if (signInResult?.error) {
-          setServerError(signInResult.error)
-        } else if (signInResult?.url) {
-          router.push('/dashboard')
-          router.refresh()
-        }
-      } else {
+      if (!res.ok) {
         setServerError(data.error || 'Failed to create account')
+        return
+      }
+      // signIn() with redirect: false; callbackUrl arg would be a no-op
+      // here because we handle navigation manually below.
+      const signInResult = await signIn('credentials', {
+        email,
+        password,
+        redirect: false
+      })
+      if (signInResult?.error) {
+        setServerError(signInResult.error)
+        return
+      }
+      if (signInResult?.url) {
+        router.push('/dashboard')
+        router.refresh()
       }
     } catch (err) {
       console.error('Sign-up error:', err)

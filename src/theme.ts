@@ -79,11 +79,6 @@ const themeOptions: ThemeOptions = {
         }
       }
     },
-    MuiCard: {
-      defaultProps: {
-        sx: { p: 6 }
-      }
-    },
     MuiDivider: {
       defaultProps: {
         sx: {
@@ -98,10 +93,7 @@ const themeOptions: ThemeOptions = {
     },
     MuiContainer: {
       defaultProps: {
-        maxWidth: 'xl',
-        sx: {
-          mb: 4
-        }
+        maxWidth: 'xl'
       }
     },
     MuiRating: {
@@ -118,6 +110,9 @@ const themeOptions: ThemeOptions = {
       }
     },
     MuiInputLabel: {
+      // Permanently shrunk above the field — opinionated for outlined-variant
+      // forms in this starter. If you forking and want the floating-label
+      // animation back, drop this default.
       defaultProps: { shrink: true }
     },
     MuiFormLabel: {

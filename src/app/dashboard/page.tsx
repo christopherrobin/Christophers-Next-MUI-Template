@@ -60,6 +60,8 @@ export default async function Dashboard() {
               width: '100%'
             }}
           >
+            {/* TODO: remove this debug session dump for production — the
+                JWT shape (id, email, expires, etc.) is starter scaffolding. */}
             <Box
               component="pre"
               data-testid="session-json"

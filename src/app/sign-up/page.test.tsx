@@ -93,8 +93,7 @@ describe('SignUp page', () => {
     expect(mockedSignIn).toHaveBeenCalledWith('credentials', {
       email: 'new@example.com',
       password: 'ChrisIsTheBest42!',
-      redirect: false,
-      callbackUrl: '/dashboard'
+      redirect: false
     })
 
     await waitFor(() => {
