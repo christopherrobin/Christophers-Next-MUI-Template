@@ -11,7 +11,7 @@
 - **Next.js 16** with App Router (Turbopack default)
 - **React 19**, **TypeScript 6** (strict)
 - **Prisma 6** with PostgreSQL
-- **Material UI 5** with Emotion (custom dark theme at `theme.ts`)
+- **Material UI 9** with Emotion + `@mui/material-nextjs` AppRouterCacheProvider (custom dark theme at `theme.ts`)
 - **`@mui/icons-material`** for icons
 - **Geist** fonts wired into the MUI theme
 - **NextAuth.js 4** for authentication (email & password, JWT sessions)

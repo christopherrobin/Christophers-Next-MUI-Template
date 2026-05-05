@@ -1,6 +1,6 @@
 # Christophers-Next-MUI-Template
 
-A public Next.js 16 starter template with TypeScript, Material UI 5 + Emotion, Prisma + PostgreSQL, NextAuth.js (credentials), and Zod + react-hook-form for forms.
+A public Next.js 16 starter template with TypeScript, Material UI 9 + Emotion, Prisma + PostgreSQL, NextAuth.js (credentials), and Zod + react-hook-form for forms.
 
 **Sibling repo:** `../Christophers-Next-Template` is the Tailwind variant. The two are kept in feature parity except for styling — when making structural changes here (auth, middleware, tooling, tests, scripts, configs, schemas), consider whether the same change applies there.
 
@@ -8,7 +8,7 @@ A public Next.js 16 starter template with TypeScript, Material UI 5 + Emotion, P
 
 - Next.js 16 (App Router, Turbopack default)
 - React 19, TypeScript 6 (strict)
-- Material UI 5.18 + `@emotion/react` + `@emotion/styled` + `@mui/icons-material`
+- Material UI 9.0 + `@mui/material-nextjs` (AppRouterCacheProvider) + `@emotion/react` + `@emotion/styled` + `@mui/icons-material`
 - Custom MUI theme at `theme.ts` (root) — dark mode, primary `#20cb91` (white contrastText)
 - Prisma 6 + PostgreSQL
 - NextAuth.js 4 (Credentials provider, bcryptjs)
@@ -78,7 +78,7 @@ e2e/             # Playwright specs + fixtures + helpers
 
 ## Forms
 
-Sign-in and sign-up use **react-hook-form + `zodResolver`** with MUI's `<Controller>` pattern wrapping `<TextField>`. Schemas live in `src/lib/schemas.ts` and are used by both the client form and the server-side `joinSchema.safeParse()` in `/api/sign-up/route.ts` — single source of truth for validation. Forms set `noValidate` on the form so RHF + Zod owns validation (not native HTML5). Field errors render via `helperText` + `FormHelperTextProps` for `data-testid` support.
+Sign-in and sign-up use **react-hook-form + `zodResolver`** with MUI's `<Controller>` pattern wrapping `<TextField>`. Schemas live in `src/lib/schemas.ts` and are used by both the client form and the server-side `signUpSchema.safeParse()` in `/api/sign-up/route.ts` — single source of truth for validation. Forms set `noValidate` on the form so RHF + Zod owns validation (not native HTML5). Field errors render via `helperText` + `slotProps={{ formHelperText: { 'data-testid': '...' } as Partial<FormHelperTextProps> }}` (MUI 6+ slotProps API; the `Partial<FormHelperTextProps>` cast satisfies typing for the `data-testid` passthrough).
 
 ## Auth & Middleware
 
