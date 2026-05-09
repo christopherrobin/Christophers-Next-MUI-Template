@@ -158,7 +158,7 @@ export default function Home() {
             <Typography
               variant="body1"
               sx={{
-                color: (theme) => alpha(theme.palette.common.white, 0.75),
+                color: (theme) => theme.palette.text.secondary,
                 maxWidth: 560,
                 mb: 4
               }}
@@ -225,7 +225,7 @@ export default function Home() {
           <Typography
             variant="body1"
             sx={{
-              color: (theme) => alpha(theme.palette.common.white, 0.7),
+              color: (theme) => theme.palette.text.secondary,
               maxWidth: 640,
               mb: 4
             }}
@@ -305,7 +305,7 @@ export default function Home() {
                 >
                   <Typography
                     variant="body1"
-                    sx={{ fontWeight: 700, color: 'common.white' }}
+                    sx={{ fontWeight: 700, color: 'text.primary' }}
                   >
                     {tech.name}
                   </Typography>
@@ -331,7 +331,7 @@ export default function Home() {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: (theme) => alpha(theme.palette.common.white, 0.65),
+                    color: (theme) => theme.palette.text.secondary,
                     lineHeight: 1.6
                   }}
                 >
@@ -350,7 +350,7 @@ export default function Home() {
           <Typography
             variant="body1"
             sx={{
-              color: (theme) => alpha(theme.palette.common.white, 0.7),
+              color: (theme) => theme.palette.text.secondary,
               mb: 5
             }}
           >
@@ -398,7 +398,7 @@ export default function Home() {
                 <Typography
                   variant="body2"
                   sx={{
-                    color: (theme) => alpha(theme.palette.common.white, 0.7),
+                    color: (theme) => theme.palette.text.secondary,
                     fontSize: '1rem',
                     lineHeight: 1.55
                   }}
@@ -432,7 +432,7 @@ export default function Home() {
           <Typography
             variant="body1"
             sx={{
-              color: (theme) => alpha(theme.palette.common.white, 0.7),
+              color: (theme) => theme.palette.text.secondary,
               mb: 4,
               maxWidth: 520,
               mx: 'auto'
@@ -484,7 +484,7 @@ export default function Home() {
               spacing={1}
               sx={{
                 alignItems: 'center',
-                color: (t) => alpha(t.palette.common.white, 0.6),
+                color: (t) => t.palette.text.secondary,
                 fontSize: '0.875rem'
               }}
             >
@@ -508,7 +508,7 @@ export default function Home() {
             </Stack>
             <Typography
               variant="body2"
-              sx={{ color: (t) => alpha(t.palette.common.white, 0.6) }}
+              sx={{ color: (t) => t.palette.text.secondary }}
             >
               Built by{' '}
               <MuiLink
