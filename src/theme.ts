@@ -1,27 +1,76 @@
 'use client'
 import {
   createTheme,
-  ThemeOptions,
-  responsiveFontSizes
+  responsiveFontSizes,
+  type ThemeOptions
 } from '@mui/material/styles'
-import type { PaletteOptions } from '@mui/material/styles'
 
 const primaryMain = '#20cb91'
 const secondaryMain = '#8a92b2'
-const bgDark = '#0e1018'
-const bgLight = '#131621'
+const bgDarkDefault = '#0e1018'
+const bgDarkPaper = '#131621'
 
-const themeOptions: ThemeOptions = {
+// Shared options across both schemes (typography + component overrides
+// that don't depend on palette).
+const sharedOptions: ThemeOptions = {
+  typography: {
+    fontFamily: 'var(--font-geist-sans)',
+    h1: { fontWeight: 900, fontSize: '3rem' },
+    h2: { fontSize: '2.6rem', fontWeight: 700 },
+    h3: { fontSize: '2.2rem', fontWeight: 500 },
+    h4: { fontSize: '2rem' },
+    h5: { fontSize: '1.6rem' },
+    h6: { fontSize: '1.4rem' },
+    body1: { fontSize: '1.2rem' }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: { fontWeight: 900, textTransform: 'none', padding: '16px' }
+      }
+    },
+    MuiContainer: {
+      defaultProps: { maxWidth: 'xl' }
+    },
+    MuiRating: {
+      styleOverrides: {
+        iconFilled: { color: primaryMain },
+        iconHover: { color: primaryMain },
+        iconEmpty: { color: primaryMain }
+      }
+    },
+    MuiInputLabel: {
+      // Permanently shrunk above the field — opinionated for outlined-variant
+      // forms in this starter. If forking and you want the floating-label
+      // animation back, drop this default.
+      defaultProps: { shrink: true }
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          transition: 'color 0.2s ease-in-out',
+          '& .MuiListItemIcon-root': {
+            transition: 'color 0.2s ease-in-out'
+          },
+          '&:hover': {
+            backgroundColor: 'transparent',
+            color: theme.palette.primary.main,
+            '& .MuiListItemIcon-root': {
+              color: theme.palette.primary.main
+            }
+          }
+        })
+      }
+    }
+  }
+}
+
+const darkOptions: ThemeOptions = {
+  ...sharedOptions,
   palette: {
     mode: 'dark',
-    text: {
-      primary: '#ffffff',
-      secondary: '#3e435c'
-    },
-    background: {
-      default: bgDark,
-      paper: bgLight
-    },
+    text: { primary: '#ffffff', secondary: '#a8b1c8' },
+    background: { default: bgDarkDefault, paper: bgDarkPaper },
     primary: {
       light: 'rgb(76, 213, 167)',
       main: primaryMain,
@@ -34,121 +83,65 @@ const themeOptions: ThemeOptions = {
       dark: 'rgb(96, 102, 124)',
       contrastText: '#ededed'
     }
-  } as PaletteOptions,
-  typography: {
-    fontFamily: 'var(--font-geist-sans)',
-    h1: {
-      fontWeight: 900,
-      fontSize: '3rem'
-    },
-    h2: {
-      fontSize: '2.6rem',
-      fontWeight: 700
-    },
-    h3: {
-      fontSize: '2.2rem',
-      fontWeight: 500
-    },
-    h4: {
-      fontSize: '2rem'
-    },
-    h5: {
-      fontSize: '1.6rem'
-    },
-    h6: {
-      fontSize: '1.4rem'
-    },
-    body1: {
-      fontSize: '1.2rem'
-    }
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontWeight: 900,
-          textTransform: 'none',
-          padding: '16px'
-        }
-      }
-    },
+    ...sharedOptions.components,
     MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: bgDark
-        }
-      }
-    },
-    MuiDivider: {
-      defaultProps: {
-        sx: {
-          my: 2
-        }
-      },
-      styleOverrides: {
-        root: {
-          backgroundColor: bgDark
-        }
-      }
-    },
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: 'xl'
-      }
-    },
-    MuiRating: {
-      styleOverrides: {
-        iconFilled: {
-          color: primaryMain
-        },
-        iconHover: {
-          color: primaryMain
-        },
-        iconEmpty: {
-          color: primaryMain
-        }
-      }
-    },
-    MuiInputLabel: {
-      // Permanently shrunk above the field — opinionated for outlined-variant
-      // forms in this starter. If you forking and want the floating-label
-      // animation back, drop this default.
-      defaultProps: { shrink: true }
+      styleOverrides: { root: { backgroundColor: bgDarkPaper } }
     },
     MuiFormLabel: {
       styleOverrides: {
-        root: {
-          color: secondaryMain,
-          backgroundColor: bgLight,
-          '&.Mui-focused': {
-            color: primaryMain
-          }
-        }
-      }
-    },
-    MuiListItemButton: {
-      styleOverrides: {
-        root: {
-          transition: 'color 0.2s ease-in-out',
-          '& .MuiListItemIcon-root': {
-            transition: 'color 0.2s ease-in-out'
-          },
-          '&:hover': {
-            backgroundColor: 'transparent',
-            color: primaryMain,
-            '& .MuiListItemIcon-root': {
-              color: primaryMain
-            }
-          }
-        }
+        root: ({ theme }) => ({
+          color: theme.palette.text.secondary,
+          backgroundColor: bgDarkPaper,
+          '&.Mui-focused': { color: theme.palette.primary.main }
+        })
       }
     }
   }
 }
 
-let theme = createTheme(themeOptions)
+const lightOptions: ThemeOptions = {
+  ...sharedOptions,
+  palette: {
+    mode: 'light',
+    primary: {
+      light: 'rgb(76, 213, 167)',
+      main: primaryMain,
+      dark: 'rgb(22, 142, 101)',
+      contrastText: '#ffffff'
+    },
+    secondary: {
+      light: 'rgb(161, 167, 193)',
+      main: secondaryMain,
+      dark: 'rgb(96, 102, 124)',
+      contrastText: '#ffffff'
+    }
+  },
+  components: {
+    ...sharedOptions.components,
+    MuiAppBar: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          backgroundColor: theme.palette.background.paper
+        })
+      }
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.text.secondary,
+          backgroundColor: theme.palette.background.paper,
+          '&.Mui-focused': { color: theme.palette.primary.main }
+        })
+      }
+    }
+  }
+}
 
-// Apply responsive typography adjustments
-theme = responsiveFontSizes(theme)
+export const themeLight = responsiveFontSizes(createTheme(lightOptions))
+export const themeDark = responsiveFontSizes(createTheme(darkOptions))
 
-export default theme
+// Default export remains the dark theme so any code that imports the
+// default keeps the original behaviour while we add light-mode support.
+export default themeDark

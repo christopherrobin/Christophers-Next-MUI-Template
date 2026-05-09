@@ -67,10 +67,10 @@ export default async function Dashboard() {
               data-testid="session-json"
               sx={{
                 fontSize: '0.9rem',
-                color: 'grey.300',
+                color: 'text.secondary',
                 whiteSpace: 'pre-wrap',
                 overflowX: 'auto',
-                bgcolor: 'grey.900',
+                bgcolor: 'background.paper',
                 p: 2,
                 borderRadius: 2,
                 width: '100%'
