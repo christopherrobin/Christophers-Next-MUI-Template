@@ -39,12 +39,14 @@ describe('Providers', () => {
     expect(screen.getByText('hello world')).toBeInTheDocument()
   })
 
-  it('exposes the MUI theme to descendants', () => {
+  it('exposes the MUI theme to descendants with brand primary preserved', () => {
     render(
       <Providers>
         <ThemeProbe />
       </Providers>
     )
+    // `#20cb91` is the brand primary in BOTH light and dark color schemes —
+    // theme refactor must preserve this contract.
     expect(screen.getByTestId('primary')).toHaveTextContent('#20cb91')
   })
 

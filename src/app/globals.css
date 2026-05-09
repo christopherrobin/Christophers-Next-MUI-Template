@@ -27,10 +27,13 @@ a:hover {
   text-decoration: underline;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Browser color-scheme hint follows the active theme class set by the
+   pre-hydration script in app/layout.tsx. */
+html.dark {
+  color-scheme: dark;
+}
+html.light {
+  color-scheme: light;
 }
 
 .ellipsis {
@@ -53,12 +56,24 @@ a:hover {
   }
 }
 
-/* Add this to your CSS file */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #0e1018 inset !important;
-  -webkit-text-fill-color: white !important;
+/* Browser autofill: paint the field with the active theme's surface so
+   the form-control doesn't get a yellow/blue UA highlight. Two rules,
+   one per scheme — no MUI css variables (the cssVariables API has an
+   SSR bug at this MUI version, see app/layout.tsx). */
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover,
+html.dark input:-webkit-autofill:focus,
+html.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #131621 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+html.light input:-webkit-autofill,
+html.light input:-webkit-autofill:hover,
+html.light input:-webkit-autofill:focus,
+html.light input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: rgba(0, 0, 0, 0.87) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
