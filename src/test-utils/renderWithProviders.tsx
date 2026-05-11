@@ -18,6 +18,10 @@ function AllProviders({ children }: ProvidersProps) {
   )
 }
 
+/**
+ * Renders a component inside the MUI ThemeProvider + CssBaseline shell
+ * used by the app, so component tests see the real theme tokens.
+ */
 export function renderWithProviders(
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>
@@ -25,6 +29,7 @@ export function renderWithProviders(
   return render(ui, { wrapper: AllProviders, ...options })
 }
 
+/** Thin re-export of `userEvent.setup()` for consistency across test files. */
 export function setupUser() {
   return userEvent.setup()
 }

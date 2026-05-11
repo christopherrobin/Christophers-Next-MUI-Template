@@ -1,5 +1,6 @@
-// NextAuth v4 — update getServerSession + AuthOptions imports on v5 migration
 import { NextResponse } from 'next/server'
+// TODO: on NextAuth v5 migration, swap `getServerSession` for `auth()`
+// and import `AuthOptions` from the new entry point.
 import { getServerSession, type Session } from 'next-auth'
 
 import { authOptions } from '@/lib/auth'
@@ -23,12 +24,15 @@ export function validationError(details: Record<string, string[] | undefined>) {
 
 /**
  * Guard helper for authenticated API routes. Returns the session and
- * userId on success, or an error response to return early.
+ * userId on success, or an `error` response the caller should return
+ * directly.
  *
- * Usage:
- *   const auth = await requireAuth()
- *   if ('error' in auth) return auth.error
- *   const { session, userId } = auth
+ * @example
+ * ```ts
+ * const auth = await requireAuth()
+ * if ('error' in auth) return auth.error
+ * const { session, userId } = auth
+ * ```
  */
 export async function requireAuth(): Promise<AuthResult> {
   const session = await getServerSession(authOptions)

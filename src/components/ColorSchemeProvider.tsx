@@ -97,9 +97,15 @@ function invalidate(): void {
   cachedSnapshot = null
 }
 
-// Test-only: reset module-scope state between tests. Production code
-// should never call this. Kept here (rather than a separate file) so
-// the closure-private state is reachable.
+/**
+ * Test-only helper. Resets the module-scope in-memory override and
+ * cached snapshot so tests don't bleed state across `beforeEach`.
+ *
+ * @remarks
+ * Production code should never call this. Lives in this module (rather
+ * than a separate test file) because the state it resets is
+ * file-private.
+ */
 export function __resetColorSchemeForTest(): void {
   inMemoryMode = null
   cachedSnapshot = null
@@ -130,6 +136,18 @@ function subscribe(callback: () => void): () => void {
   }
 }
 
+/**
+ * Provides the active theme mode (`'system' | 'light' | 'dark'`) and
+ * the resolved binary mode (`'light' | 'dark'`) to descendants via
+ * context.
+ *
+ * @remarks
+ * Backed by a module-scope external store over `localStorage` and
+ * `matchMedia` via {@link useSyncExternalStore}, so snapshot
+ * transitions land as part of hydration. Pair with the inline boot
+ * script in `layout.tsx` that sets the initial `<html>` class before
+ * React mounts — that's what prevents a theme flash on first paint.
+ */
 export function ColorSchemeProvider({ children }: { children: ReactNode }) {
   const snapshot = useSyncExternalStore(
     subscribe,
@@ -174,6 +192,10 @@ export function ColorSchemeProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/**
+ * Returns the current color-scheme context. Throws if called outside a
+ * {@link ColorSchemeProvider}.
+ */
 export function useColorScheme() {
   const ctx = useContext(ColorSchemeContext)
   if (!ctx) {

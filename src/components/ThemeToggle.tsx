@@ -17,6 +17,14 @@ const OPTIONS: ReadonlyArray<{
   { value: 'dark', label: 'Dark', Icon: DarkModeIcon }
 ]
 
+/**
+ * Fixed-position System / Light / Dark toggle group.
+ *
+ * Reads and writes the active mode through {@link useColorScheme}.
+ * Buttons are disabled until {@link useColorScheme}.mounted flips true
+ * so the selected option doesn't briefly disagree with the inline
+ * boot-script's choice on first paint.
+ */
 export function ThemeToggle() {
   const { mode, setMode, mounted } = useColorScheme()
 

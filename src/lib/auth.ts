@@ -1,13 +1,22 @@
-// src/lib/auth.ts
 import { compare } from 'bcryptjs'
 import type { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 import { prisma } from '@/lib/prisma'
 
-// Exported directly so unit tests can import it without reaching into the
-// provider's internals via `as unknown as`. NextAuth wraps this same
-// function inside the CredentialsProvider config below.
+/**
+ * Validates an email/password pair against the database and returns the
+ * JSON-safe user object NextAuth expects.
+ *
+ * @remarks
+ * Exported (rather than inlined into {@link authOptions}) so unit tests
+ * can call it directly without reaching into the provider's internals
+ * via `as unknown as`. The same function is wired into the Credentials
+ * provider below.
+ *
+ * Throws `Invalid email or password` on any failure (missing fields,
+ * unknown user, bad password) — never leaks which dimension failed.
+ */
 export async function authorize(
   credentials: Record<'email' | 'password', string> | undefined
 ) {

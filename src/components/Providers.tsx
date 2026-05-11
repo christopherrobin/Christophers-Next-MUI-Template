@@ -1,4 +1,3 @@
-// src/components/Providers.tsx
 'use client'
 import { CssBaseline } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
@@ -21,6 +20,13 @@ function ThemedTree({ children }: { children: ReactNode }) {
   )
 }
 
+/**
+ * Root client-side provider tree.
+ *
+ * Wires {@link SessionProvider} (NextAuth), the MUI App Router cache
+ * (Emotion SSR), and {@link ColorSchemeProvider} together so child
+ * components can read the resolved theme and active session via context.
+ */
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <SessionProvider>

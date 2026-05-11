@@ -10,6 +10,7 @@ interface SessionUserOverrides {
   updatedAt?: string
 }
 
+/** Returns a fully-populated NextAuth session user with sensible defaults. */
 export function makeSessionUser(overrides: SessionUserOverrides = {}) {
   return {
     id: 'user-1',
@@ -23,6 +24,7 @@ export function makeSessionUser(overrides: SessionUserOverrides = {}) {
   }
 }
 
+/** Builds a NextAuth {@link Session} with an embedded {@link makeSessionUser}. */
 export function makeSession(
   overrides: { user?: SessionUserOverrides; expires?: string } = {}
 ): Session {
@@ -41,6 +43,7 @@ export interface UserRecord {
   updatedAt: Date
 }
 
+/** Builds a Prisma-shaped User row (with `Date` timestamps) for DB-level tests. */
 export function makeUser(overrides: Partial<UserRecord> = {}): UserRecord {
   const now = new Date('2026-01-01T00:00:00.000Z')
   return {
