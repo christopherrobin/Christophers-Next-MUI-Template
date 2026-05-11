@@ -75,7 +75,9 @@ const darkOptions: ThemeOptions = {
       light: 'rgb(76, 213, 167)',
       main: primaryMain,
       dark: 'rgb(22, 142, 101)',
-      contrastText: '#ffffff'
+      // Dark text on the bright brand green — required for WCAG AA
+      // contrast on contained buttons (white on #20cb91 is ~2.1:1).
+      contrastText: bgDarkDefault
     },
     secondary: {
       light: 'rgb(161, 167, 193)',
@@ -109,7 +111,9 @@ const lightOptions: ThemeOptions = {
       light: 'rgb(76, 213, 167)',
       main: primaryMain,
       dark: 'rgb(22, 142, 101)',
-      contrastText: '#ffffff'
+      // Dark text on the bright brand green — required for WCAG AA
+      // contrast on contained buttons (white on #20cb91 is ~2.1:1).
+      contrastText: bgDarkDefault
     },
     secondary: {
       light: 'rgb(161, 167, 193)',
