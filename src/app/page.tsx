@@ -493,7 +493,7 @@ export default function Home() {
                 href={REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                underline="hover"
+                underline="always"
                 sx={{
                   color: 'inherit',
                   '&:hover': { color: 'primary.main' }
@@ -515,7 +515,7 @@ export default function Home() {
                 href="https://github.com/christopherrobin"
                 target="_blank"
                 rel="noopener noreferrer"
-                underline="hover"
+                underline="always"
                 sx={{
                   color: 'inherit',
                   '&:hover': { color: 'primary.main' }

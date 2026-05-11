@@ -152,7 +152,7 @@ export default function SignUp() {
           }}
         >
           Already have an account?{' '}
-          <Link href="/sign-in" color="primary" underline="hover">
+          <Link href="/sign-in" color="primary" underline="always">
             Sign In
           </Link>
         </Typography>

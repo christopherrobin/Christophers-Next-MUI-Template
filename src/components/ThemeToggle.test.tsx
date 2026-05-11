@@ -2,7 +2,11 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 
-import { ColorSchemeProvider, STORAGE_KEY } from './ColorSchemeProvider'
+import {
+  ColorSchemeProvider,
+  STORAGE_KEY,
+  __resetColorSchemeForTest
+} from './ColorSchemeProvider'
 import { ThemeToggle } from './ThemeToggle'
 
 const renderWithProvider = () =>
@@ -15,6 +19,7 @@ const renderWithProvider = () =>
 describe('ThemeToggle', () => {
   beforeEach(() => {
     window.localStorage.clear()
+    __resetColorSchemeForTest()
   })
 
   it('renders three theme buttons once mounted', async () => {

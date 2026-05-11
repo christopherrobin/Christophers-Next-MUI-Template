@@ -125,7 +125,7 @@ function SignInForm() {
           }}
         >
           Don&apos;t have an account?{' '}
-          <Link href="/sign-up" color="primary" underline="hover">
+          <Link href="/sign-up" color="primary" underline="always">
             Sign up
           </Link>
         </Typography>

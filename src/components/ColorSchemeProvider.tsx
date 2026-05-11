@@ -5,14 +5,21 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode
 } from 'react'
+
+import { useHydrated } from '@/hooks/useHydrated'
 
 export type ThemeMode = 'system' | 'light' | 'dark'
 export type ResolvedMode = 'light' | 'dark'
 
 export const STORAGE_KEY = 'mui-mode'
+// Custom event so setMode() can notify subscribers in the same tab —
+// the native `storage` event only fires across tabs.
+const CHANGE_EVENT = 'mui-mode-change'
+
+type Snapshot = { mode: ThemeMode; resolvedMode: ResolvedMode }
 
 type ColorSchemeContextValue = {
   mode: ThemeMode
@@ -30,7 +37,14 @@ function readSystemPref(): ResolvedMode {
     : 'light'
 }
 
+// In-memory override used when localStorage writes are blocked
+// (private mode, quota exceeded). Without this, setMode() would have
+// no effect on the UI because getSnapshot() re-reads from localStorage.
+// Cleared by the cross-tab storage event so external updates win.
+let inMemoryMode: ThemeMode | null = null
+
 function readStoredMode(): ThemeMode {
+  if (inMemoryMode !== null) return inMemoryMode
   if (typeof window === 'undefined') return 'system'
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
@@ -51,46 +65,106 @@ function writeStoredMode(mode: ThemeMode): void {
   }
 }
 
+// External store backing the snapshot. Cached so useSyncExternalStore
+// gets a stable reference between renders when the underlying mode
+// hasn't changed (otherwise React would treat every getSnapshot() as a
+// state change and infinite-loop).
+let cachedSnapshot: Snapshot | null = null
+
+function getSnapshot(): Snapshot {
+  const mode = readStoredMode()
+  const resolvedMode = mode === 'system' ? readSystemPref() : mode
+  if (
+    cachedSnapshot &&
+    cachedSnapshot.mode === mode &&
+    cachedSnapshot.resolvedMode === resolvedMode
+  ) {
+    return cachedSnapshot
+  }
+  cachedSnapshot = { mode, resolvedMode }
+  return cachedSnapshot
+}
+
+// Must match the inline boot script's first-paint default exactly to
+// avoid a hydration class flip. Boot script falls back to 'system' →
+// resolves to dark when matchMedia is unavailable.
+const SERVER_SNAPSHOT: Snapshot = { mode: 'system', resolvedMode: 'dark' }
+function getServerSnapshot(): Snapshot {
+  return SERVER_SNAPSHOT
+}
+
+function invalidate(): void {
+  cachedSnapshot = null
+}
+
+// Test-only: reset module-scope state between tests. Production code
+// should never call this. Kept here (rather than a separate file) so
+// the closure-private state is reachable.
+export function __resetColorSchemeForTest(): void {
+  inMemoryMode = null
+  cachedSnapshot = null
+}
+
+function subscribe(callback: () => void): () => void {
+  if (typeof window === 'undefined') return () => {}
+  const mql = window.matchMedia('(prefers-color-scheme: dark)')
+  const onChange = () => {
+    invalidate()
+    callback()
+  }
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === STORAGE_KEY) {
+      // External tab wrote the canonical value — drop our in-memory
+      // override so its update wins.
+      inMemoryMode = null
+      onChange()
+    }
+  }
+  window.addEventListener(CHANGE_EVENT, onChange)
+  window.addEventListener('storage', onStorage)
+  mql.addEventListener('change', onChange)
+  return () => {
+    window.removeEventListener(CHANGE_EVENT, onChange)
+    window.removeEventListener('storage', onStorage)
+    mql.removeEventListener('change', onChange)
+  }
+}
+
 export function ColorSchemeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ThemeMode>('system')
-  const [resolvedMode, setResolvedMode] = useState<ResolvedMode>('dark')
-  const [mounted, setMounted] = useState(false)
+  const snapshot = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  )
+  const mounted = useHydrated()
 
-  // Initial sync after mount: hydrate from localStorage + system pref.
-  useEffect(() => {
-    const stored = readStoredMode()
-    setModeState(stored)
-    setResolvedMode(stored === 'system' ? readSystemPref() : stored)
-    setMounted(true)
-  }, [])
-
-  // Follow system pref live when mode === 'system'.
-  useEffect(() => {
-    if (mode !== 'system') return
-    const mql = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = (e: MediaQueryListEvent) =>
-      setResolvedMode(e.matches ? 'dark' : 'light')
-    mql.addEventListener('change', handler)
-    return () => mql.removeEventListener('change', handler)
-  }, [mode])
-
-  // Reflect resolved mode on <html> so globals.css and user CSS can react.
+  // Reflect resolved mode on <html> so globals.css and user CSS can
+  // react. Gated on `mounted` so we don't fight the inline boot script
+  // during the first paint — it already applied the correct class.
   useEffect(() => {
     if (!mounted) return
     const root = document.documentElement
-    root.classList.toggle('dark', resolvedMode === 'dark')
-    root.classList.toggle('light', resolvedMode === 'light')
-  }, [resolvedMode, mounted])
+    root.classList.toggle('dark', snapshot.resolvedMode === 'dark')
+    root.classList.toggle('light', snapshot.resolvedMode === 'light')
+  }, [snapshot.resolvedMode, mounted])
 
   const setMode = useCallback((next: ThemeMode) => {
-    setModeState(next)
+    inMemoryMode = next
     writeStoredMode(next)
-    setResolvedMode(next === 'system' ? readSystemPref() : next)
+    invalidate()
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event(CHANGE_EVENT))
+    }
   }, [])
 
-  const value = useMemo(
-    () => ({ mode, resolvedMode, setMode, mounted }),
-    [mode, resolvedMode, setMode, mounted]
+  const value = useMemo<ColorSchemeContextValue>(
+    () => ({
+      mode: snapshot.mode,
+      resolvedMode: snapshot.resolvedMode,
+      setMode,
+      mounted
+    }),
+    [snapshot.mode, snapshot.resolvedMode, setMode, mounted]
   )
 
   return (
