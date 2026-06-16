@@ -27,7 +27,7 @@ const mockedGetServerSession = jest.mocked(getServerSession)
 const mockedRedirect = redirect as unknown as jest.Mock
 
 describe('Dashboard page (server component)', () => {
-  it('greets the authenticated user and renders the session JSON', async () => {
+  it('greets the authenticated user', async () => {
     const session = makeSession({ user: { email: 'a@b.com' } })
     mockedGetServerSession.mockResolvedValue(session)
 
@@ -38,7 +38,6 @@ describe('Dashboard page (server component)', () => {
       screen.getByRole('heading', { name: /dashboard/i })
     ).toBeInTheDocument()
     expect(screen.getByText(/welcome,\s*a@b\.com/i)).toBeInTheDocument()
-    expect(screen.getByTestId('session-json')).toHaveTextContent(/a@b\.com/)
     expect(
       screen.getByRole('button', { name: /sign out/i })
     ).toBeInTheDocument()

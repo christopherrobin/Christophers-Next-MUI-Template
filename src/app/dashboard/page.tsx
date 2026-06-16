@@ -52,33 +52,6 @@ export default async function Dashboard() {
             width: '100%'
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              width: '100%'
-            }}
-          >
-            {/* TODO: remove this debug session dump for production — the
-                JWT shape (id, email, expires, etc.) is starter scaffolding. */}
-            <Box
-              component="pre"
-              data-testid="session-json"
-              sx={{
-                fontSize: '0.9rem',
-                color: 'text.secondary',
-                whiteSpace: 'pre-wrap',
-                overflowX: 'auto',
-                bgcolor: 'background.paper',
-                p: 2,
-                borderRadius: 2,
-                width: '100%'
-              }}
-            >
-              {JSON.stringify(session, null, 2)}
-            </Box>
-          </Box>
           <SignOutButton />
         </Box>
       </Box>

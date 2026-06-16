@@ -14,16 +14,6 @@ test.describe('dashboard (authenticated)', () => {
     ).toBeVisible()
   })
 
-  test('renders the JSON-stringified session containing the user email', async ({
-    authedPage,
-    authedEmail
-  }) => {
-    await authedPage.goto('/dashboard')
-    await expect(authedPage.getByTestId('session-json')).toContainText(
-      authedEmail
-    )
-  })
-
   test('exposes a Sign out button', async ({ authedPage }) => {
     await authedPage.goto('/dashboard')
     await expect(
