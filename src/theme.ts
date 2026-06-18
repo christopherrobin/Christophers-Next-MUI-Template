@@ -6,6 +6,10 @@ import {
 } from '@mui/material/styles'
 
 const primaryMain = '#20cb91'
+// Darkened brand green for light mode: the bright #20cb91 only hits ~2.1:1
+// against white text, so light surfaces use this deeper shade to keep white
+// button text/icons at WCAG AA.
+const primaryLightMode = 'rgb(22, 142, 101)'
 const secondaryMain = '#8a92b2'
 const bgDarkDefault = '#0e1018'
 const bgDarkPaper = '#131621'
@@ -108,12 +112,11 @@ const lightOptions: ThemeOptions = {
   palette: {
     mode: 'light',
     primary: {
-      light: 'rgb(76, 213, 167)',
-      main: primaryMain,
-      dark: 'rgb(22, 142, 101)',
-      // Dark text on the bright brand green — required for WCAG AA
-      // contrast on contained buttons (white on #20cb91 is ~2.1:1).
-      contrastText: bgDarkDefault
+      light: primaryMain,
+      main: primaryLightMode,
+      dark: 'rgb(16, 110, 78)',
+      // White text on the darkened green clears WCAG AA on light surfaces.
+      contrastText: '#ffffff'
     },
     secondary: {
       light: 'rgb(161, 167, 193)',
