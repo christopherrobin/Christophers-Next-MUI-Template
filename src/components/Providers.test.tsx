@@ -39,15 +39,16 @@ describe('Providers', () => {
     expect(screen.getByText('hello world')).toBeInTheDocument()
   })
 
-  it('exposes the MUI theme to descendants with brand primary preserved', () => {
+  it('exposes the MUI theme to descendants with the brand primary', () => {
     render(
       <Providers>
         <ThemeProbe />
       </Providers>
     )
-    // `#20cb91` is the brand primary in BOTH light and dark color schemes —
-    // theme refactor must preserve this contract.
-    expect(screen.getByTestId('primary')).toHaveTextContent('#20cb91')
+    // jsdom resolves to light mode (matchMedia → not dark). Light mode uses the
+    // darkened brand green (WCAG AA white-text contrast); dark mode keeps the
+    // bright `#20cb91`. Either way the theme must reach descendants.
+    expect(screen.getByTestId('primary')).toHaveTextContent('rgb(22, 142, 101)')
   })
 
   it('mounts SessionProvider so useSession works without throwing', async () => {

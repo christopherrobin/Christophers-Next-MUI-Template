@@ -99,7 +99,10 @@ const darkOptions: ThemeOptions = {
       styleOverrides: {
         root: ({ theme }) => ({
           color: theme.palette.text.secondary,
-          backgroundColor: bgDarkPaper,
+          // Transparent: the outlined input's notch already cuts the label gap,
+          // so a hardcoded surface color only leaks as a stray box onto elevated
+          // surfaces (e.g. a Data Grid filter-panel popover).
+          backgroundColor: 'transparent',
           '&.Mui-focused': { color: theme.palette.primary.main }
         })
       }
@@ -138,7 +141,10 @@ const lightOptions: ThemeOptions = {
       styleOverrides: {
         root: ({ theme }) => ({
           color: theme.palette.text.secondary,
-          backgroundColor: theme.palette.background.paper,
+          // Transparent: the outlined input's notch already cuts the label gap,
+          // so a hardcoded surface color only leaks as a stray box onto elevated
+          // surfaces (e.g. a Data Grid filter-panel popover).
+          backgroundColor: 'transparent',
           '&.Mui-focused': { color: theme.palette.primary.main }
         })
       }
