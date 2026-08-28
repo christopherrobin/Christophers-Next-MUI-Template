@@ -26,8 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -39,8 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -52,8 +52,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -65,8 +65,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -95,8 +95,8 @@ jobs:
       DATABASE_PUBLIC_URL: postgresql://ci:ci@localhost:5432/ci
       DATABASE_TEST_URL: postgresql://ci:ci@localhost:5432/ci
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -124,8 +124,15 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     timeout-minutes: 5
+    # Overrides the workflow-level `contents: read` for this job only.
+    # Without pull-requests: write the action cannot post its summary,
+    # so a licence failure reports "incompatible licenses" and never
+    # names the package responsible.
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/dependency-review-action@v5
         with:
           fail-on-severity: moderate
@@ -135,4 +142,22 @@ jobs:
           fail-on-scopes: runtime
           comment-summary-in-pr: on-failure
           license-check: true
-          allow-licenses: MIT, ISC, Apache-2.0, BSD-2-Clause, BSD-3-Clause, 0BSD, CC0-1.0, Unlicense, BlueOak-1.0.0, MPL-2.0
+          # LGPL-3.0-or-later covers the ten @img/sharp-libvips-* native
+          # binaries that ship with sharp, which Next pulls in for image
+          # optimisation. They are prebuilt, dynamically linked, already
+          # present on main, and re-evaluated here only because sharp
+          # changed version. Adding it also clears the sharp win32 and
+          # wasm32 packages, which declare compound expressions like
+          # "Apache-2.0 AND LGPL-3.0-or-later" — a compound expression is
+          # satisfied once every component it names is allowed.
+          allow-licenses: MIT, ISC, Apache-2.0, BSD-2-Clause, BSD-3-Clause, 0BSD, CC0-1.0, Unlicense, BlueOak-1.0.0, MPL-2.0, LGPL-3.0-or-later
+          # Two packages cannot be cleared by licence name, so they are
+          # exempted individually and the policy above stays strict for
+          # everything else. Both arrive via @prisma/studio-core, making
+          # them CLI tooling that never enters the application bundle.
+          #
+          # elkjs is EPL-2.0. robust-predicates declares
+          # "LicenseRef-scancode-public-domain AND Unlicense"; the
+          # LicenseRef- half is not an SPDX identifier, so allowing
+          # Unlicense does not satisfy the expression.
+          allow-dependencies-licenses: 'pkg:npm/elkjs, pkg:npm/robust-predicates'

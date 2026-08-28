@@ -7,8 +7,16 @@ updates:
       day: 'monday'
     open-pull-requests-limit: 5
     groups:
+      # Restricted to minor/patch for the same reason as the production
+      # group: an unrestricted group sweeps majors in, and one breaking
+      # major fails CI for the whole batch, so none of the other updates
+      # can land. Majors still arrive, as individual PRs that can be
+      # evaluated on their own.
       dev-dependencies:
         dependency-type: 'development'
+        update-types:
+          - 'minor'
+          - 'patch'
       production-dependencies:
         dependency-type: 'production'
         update-types:
