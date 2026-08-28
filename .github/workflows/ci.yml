@@ -124,6 +124,13 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     timeout-minutes: 5
+    # Overrides the workflow-level `contents: read` for this job only.
+    # Without pull-requests: write the action cannot post its summary,
+    # so a licence failure reports "incompatible licenses" and never
+    # names the package responsible.
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v7
       - uses: actions/dependency-review-action@v5
