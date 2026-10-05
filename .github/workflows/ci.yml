@@ -160,4 +160,7 @@ jobs:
           # "LicenseRef-scancode-public-domain AND Unlicense"; the
           # LicenseRef- half is not an SPDX identifier, so allowing
           # Unlicense does not satisfy the expression.
-          allow-dependencies-licenses: 'pkg:npm/elkjs, pkg:npm/robust-predicates'
+          #
+          # caniuse-lite is CC-BY-4.0: browser-support data read at build
+          # time by browserslist, not code linked into the app.
+          allow-dependencies-licenses: 'pkg:npm/caniuse-lite, pkg:npm/elkjs, pkg:npm/robust-predicates'
