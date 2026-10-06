@@ -83,7 +83,7 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 - `src/theme.ts` — Centralized MUI theme (light and dark palettes, Geist typography, component overrides)
 - `src/app/` — Next.js App Router pages (home, sign-up, sign-in, dashboard, `not-found.tsx`)
-- `src/components/` — Reusable UI components (Spinner, Providers)
+- `src/components/` — Reusable UI components (Spinner, ThemeToggle, ColorSchemeProvider, Providers)
 - `src/lib/` — Prisma client, NextAuth config, env validation (`env.ts`), API helpers (`api-utils.ts`), shared Zod schemas (`schemas.ts`)
 - `src/proxy.ts` — Next 16 middleware (route protection and auth redirects)
 - `prisma/` — Prisma schema and migrations
