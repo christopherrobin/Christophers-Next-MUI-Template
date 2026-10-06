@@ -94,6 +94,10 @@
     "type": "git",
     "url": "https://github.com/christopherrobin/Christophers-Next-MUI-Template.git"
   },
+  "homepage": "https://christophers-next-mui-template.vercel.app/",
+  "bugs": {
+    "url": "https://github.com/christopherrobin/Christophers-Next-MUI-Template/issues"
+  },
   "engines": {
     "node": ">=24.0.0"
   },
