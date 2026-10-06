@@ -15,6 +15,8 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4-000000?style=for-the-badge&logo=auth0&logoColor=white)](https://next-auth.js.org/)
 
+**Live demo:** [christophers-next-mui-template.vercel.app](https://christophers-next-mui-template.vercel.app/)
+
 ![Howdy Preview](public/welcome.png)
 
 ## A modern, minimal authentication starter for developers, built with Next.js, TypeScript, Prisma, and Material UI.
@@ -26,7 +28,7 @@
 - **Next.js 16** with App Router (Turbopack default)
 - **React 19**, **TypeScript 6** (strict)
 - **Prisma 7** with PostgreSQL
-- **Material UI 9** with Emotion + `@mui/material-nextjs` AppRouterCacheProvider (custom dark theme at `src/theme.ts`)
+- **Material UI 9** with Emotion + `@mui/material-nextjs` AppRouterCacheProvider (light and dark themes at `src/theme.ts`)
 - **`@mui/icons-material`** for icons
 - **Geist** fonts wired into the MUI theme
 - **NextAuth.js 4** for authentication (email & password, JWT sessions)
@@ -40,6 +42,9 @@
 - **End-to-End (E2E) Testing** with Playwright
 - User registration and login flows
 - Protected dashboard for authenticated users
+- System / Light / Dark theme toggle, persisted per browser
+- Content-Security-Policy and hardened security headers (`next.config.ts`)
+- Automated accessibility checks with axe-core in the Playwright suite (`e2e/a11y.spec.ts`)
 
 ## Getting Started
 
@@ -76,7 +81,7 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ## Project Structure
 
-- `src/theme.ts` — Centralized MUI theme (dark palette, Geist typography, component overrides)
+- `src/theme.ts` — Centralized MUI theme (light and dark palettes, Geist typography, component overrides)
 - `src/app/` — Next.js App Router pages (home, sign-up, sign-in, dashboard, `not-found.tsx`)
 - `src/components/` — Reusable UI components (Spinner, Providers)
 - `src/lib/` — Prisma client, NextAuth config, env validation (`env.ts`), API helpers (`api-utils.ts`), shared Zod schemas (`schemas.ts`)
@@ -127,7 +132,7 @@ Sign-in and sign-up forms use **react-hook-form + Zod** via `zodResolver`, with 
 
 ## Theming
 
-The MUI theme lives at `src/theme.ts` (dark mode, primary `#20cb91`). Geist Sans is wired in via:
+The MUI theme lives at `src/theme.ts` (light and dark palettes; primary `#20cb91` in dark mode, a deeper green in light mode for WCAG AA contrast). Geist Sans is wired in via:
 
 ```ts
 typography: { fontFamily: 'var(--font-geist-sans)', ... }
